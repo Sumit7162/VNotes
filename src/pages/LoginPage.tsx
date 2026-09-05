@@ -1,5 +1,5 @@
 import { GoogleLogin } from "@react-oauth/google";
-import { FileText, Sparkles, Mic, BookOpen } from "lucide-react";
+import { Sparkles, Mic, BookOpen } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -177,15 +177,18 @@ export function LoginPage() {
                 width: "64px",
                 height: "64px",
                 borderRadius: "20px",
-                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 8px 32px rgba(99, 102, 241, 0.4)",
+                overflow: "hidden",
+                boxShadow: "0 8px 32px rgba(56, 189, 248, 0.35)",
                 animation: "login-pulse-glow 3s ease-in-out infinite",
               }}
             >
-              <FileText style={{ width: "32px", height: "32px", color: "white" }} />
+              <img
+                src="/logo-tile.png"
+                alt=""
+                width={64}
+                height={64}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
             </div>
             <div style={{ textAlign: "center" }}>
               <h1
@@ -200,7 +203,7 @@ export function LoginPage() {
                   lineHeight: 1.2,
                 }}
               >
-                VideoNotes AI
+                V-Notes AI
               </h1>
               <p
                 style={{

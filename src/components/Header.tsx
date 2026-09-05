@@ -14,7 +14,7 @@ export function Header({ onMenuClick }: { onMenuClick?: () => void }) {
               <Menu className="h-5 w-5" />
             </button>
           )}
-          <h1 className="font-display text-lg font-semibold text-ink-900 tracking-tight hidden sm:block">Video Notes AI</h1>
+          <h1 className="font-display text-lg font-semibold text-ink-900 tracking-tight hidden sm:block">V-Notes AI</h1>
         </div>
 
         <div className="flex items-center gap-4">

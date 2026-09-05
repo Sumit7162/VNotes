@@ -44,11 +44,15 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
         }`}
       >
         <Link to="/" onClick={onClose} className="flex items-center gap-2.5 min-w-0">
-          <div className="w-9 h-9 shrink-0 bg-accent rounded-xl shadow-sm flex items-center justify-center">
-            <FileText className="h-5 w-5 text-white" />
-          </div>
+          <img
+            src="/logo-tile.png"
+            alt=""
+            width={36}
+            height={36}
+            className="w-9 h-9 shrink-0 rounded-xl shadow-sm object-cover"
+          />
           <span className={`font-display text-xl font-semibold text-ink-900 tracking-tight truncate ${hideWhenCollapsed}`}>
-            VideoNotes
+            V-Notes AI
           </span>
         </Link>
 
