@@ -49,6 +49,25 @@ body {
   background: #97A3B4;
 }
 
+/* Dark surface, owned by the .dark class the landing page sets.
+   Painting html and body too stops a white flash when the page is
+   overscrolled, and color-scheme swaps the native scrollbar and form controls
+   over so they do not stay light against a near-black page. */
+html.dark,
+html.dark body {
+  background: #06070a;
+  color: #C7D0DC;
+  color-scheme: dark;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #232A36;
+  border: 3px solid #06070a;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3A4453;
+}
+
 /* Visible focus for keyboard users, in the accent rather than the browser blue */
 :where(a, button, input, textarea, select):focus-visible {
   outline: 2px solid #2A5FD9;

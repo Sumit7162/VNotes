@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  // Class strategy, not the default "media": the home page pins itself to dark
+  // regardless of the visitor's OS setting, and that only works if `dark:`
+  // variants follow a class rather than prefers-color-scheme.
+  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -38,6 +42,8 @@ export default {
           100: "#DAE6FE",
           200: "#B9CDFC",
           300: "#8FADF8",
+          400: "#6C93F0",
+          500: "#4477E4",
           600: "#2A5FD9",
           700: "#1F49AC",
           800: "#1A3A85",
@@ -48,6 +54,8 @@ export default {
           50: "#E9FAFB",
           100: "#C7F1F4",
           200: "#97E3E9",
+          300: "#5FE3EA",
+          400: "#22D3D3",
           600: "#0E90A0",
           700: "#0B7280",
           DEFAULT: "#0E90A0",
@@ -71,6 +79,16 @@ export default {
           600: "#A9700B",
           700: "#855706",
           DEFAULT: "#A9700B",
+        },
+        // The dark surfaces for the landing page. 900 is the exact background
+        // the KineticMatrix canvas paints, so the panel and the page around it
+        // meet with no visible seam.
+        night: {
+          900: "#06070a",
+          800: "#0C0E13",
+          700: "#141821",
+          600: "#1D222D",
+          line: "#232A36",
         },
         line: {
           DEFAULT: "#DEE5EE",
