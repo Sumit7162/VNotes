@@ -1,10 +1,14 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 function FloatingPaths({ position }: { position: number }) {
-    const paths = Array.from({ length: 36 }, (_, i) => ({
+    // Built once. Upstream rebuilds this inline and rolls Math.random() inside
+    // the transition, so every re-render handed framer-motion 72 fresh
+    // durations and restarted the animations mid-flight - visible as a jump.
+    const paths = useMemo(() => Array.from({ length: 36 }, (_, i) => ({
         id: i,
         d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
             380 - i * 5 * position
@@ -15,7 +19,8 @@ function FloatingPaths({ position }: { position: number }) {
         } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
         color: `rgba(15,23,42,${0.1 + i * 0.03})`,
         width: 0.5 + i * 0.03,
-    }));
+        duration: 20 + Math.random() * 10,
+    })), [position]);
 
     return (
         <div className="absolute inset-0 pointer-events-none">
@@ -32,14 +37,17 @@ function FloatingPaths({ position }: { position: number }) {
                         stroke="currentColor"
                         strokeWidth={path.width}
                         strokeOpacity={0.1 + path.id * 0.03}
+                        // pathLength and opacity are set once and left alone.
+                        // Animating pathLength 0.3 -> 1 on a looping repeat grew
+                        // each line then snapped it back to a third of its
+                        // length every cycle, and the opacity keyframes pulsed
+                        // it bright and dim on the way. Only the offset moves
+                        // now, one direction at a constant rate, and it wraps
+                        // seamlessly because a dash pattern is periodic.
                         initial={{ pathLength: 0.3, opacity: 0.6 }}
-                        animate={{
-                            pathLength: 1,
-                            opacity: [0.3, 0.6, 0.3],
-                            pathOffset: [0, 1, 0],
-                        }}
+                        animate={{ pathOffset: [0, 1] }}
                         transition={{
-                            duration: 20 + Math.random() * 10,
+                            duration: path.duration,
                             repeat: Number.POSITIVE_INFINITY,
                             ease: "linear",
                         }}
