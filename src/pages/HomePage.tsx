@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Link2, Captions, NotebookPen } from "lucide-react";
+import { ArrowRight, ChevronDown, Link2, Captions, NotebookPen } from "lucide-react";
 import KineticMatrix from "@/components/ui/kinetic-matrix";
 import { useAuth } from "../hooks/useAuth";
 
@@ -46,37 +46,54 @@ export function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-night-900 text-ink-300 flex flex-col">
-      <header className="flex items-center justify-between px-5 py-4 sm:px-8">
-        <div className="flex items-center gap-2.5">
-          <img
-            src="/logo-tile.png"
-            alt=""
-            width={36}
-            height={36}
-            className="h-9 w-9 rounded-xl ring-1 ring-night-line"
-          />
-          <span className="font-display text-xl font-semibold tracking-tight text-paper-50">
-            V-Notes AI
-          </span>
-        </div>
+    <div className="bg-night-900 text-ink-300">
+      {/* The first screen is exactly one viewport tall: the header takes its
+          natural height and the canvas is handed every remaining pixel, so the
+          animation fills a desktop window rather than sitting in a band across
+          the top. Everything else lives below the fold. */}
+      <div className="flex h-screen min-h-[460px] flex-col">
+        <header className="flex shrink-0 items-center justify-between px-5 py-4 sm:px-8">
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/logo-tile.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-xl ring-1 ring-night-line"
+            />
+            <span className="font-display text-xl font-semibold tracking-tight text-paper-50">
+              V-Notes AI
+            </span>
+          </div>
 
-        <Link
-          to={isSignedIn ? "/dashboard" : "/login"}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-night-line bg-night-800 px-4 py-2 text-sm font-medium text-ink-300 transition-colors hover:border-accent-500 hover:text-paper-50"
-        >
-          {isSignedIn ? "Open dashboard" : "Sign in"}
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </header>
+          <Link
+            to={isSignedIn ? "/dashboard" : "/login"}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-night-line bg-night-800 px-4 py-2 text-sm font-medium text-ink-300 transition-colors hover:border-accent-500 hover:text-paper-50"
+          >
+            {isSignedIn ? "Open dashboard" : "Sign in"}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </header>
 
-      {/* The canvas paints #06070a, the same as bg-night-900, so the panel meets
-          the page with no seam. Drag across it, or click to fire a shockwave. */}
-      <section className="relative h-[58vh] min-h-[380px] w-full overflow-hidden">
-        <KineticMatrix title="V-NOTES AI" className="h-full w-full" />
-      </section>
+        {/* min-h-0 lets this flex child shrink to the space left over instead of
+            being pushed past the viewport by the canvas inside it. The canvas
+            paints #06070a, the same as bg-night-900, so there is no seam.
+            Drag across it, or click anywhere to fire a shockwave. */}
+        <section className="relative w-full min-h-0 flex-1 overflow-hidden">
+          <KineticMatrix title="V-NOTES AI" className="h-full w-full" />
 
-      <section className="mx-auto w-full max-w-3xl px-5 py-16 text-center sm:px-8">
+          <a
+            href="#pitch"
+            aria-label="Scroll to find out more"
+            className="absolute inset-x-0 bottom-5 z-30 mx-auto flex w-fit items-center gap-2 rounded-full border border-night-line bg-night-800/80 px-4 py-2 text-[11px] font-medium uppercase tracking-wide text-ink-400 backdrop-blur-sm transition-colors hover:border-accent-500 hover:text-paper-50"
+          >
+            Scroll
+            <ChevronDown className="h-3.5 w-3.5" />
+          </a>
+        </section>
+      </div>
+
+      <section id="pitch" className="mx-auto w-full max-w-3xl px-5 py-20 text-center sm:px-8">
         <h1 className="font-display text-3xl font-semibold tracking-tight text-paper-50 sm:text-4xl">
           Turn any video into notes worth keeping
         </h1>
@@ -106,10 +123,7 @@ export function HomePage() {
         </p>
       </section>
 
-      <section
-        id="how-it-works"
-        className="mx-auto w-full max-w-5xl px-5 pb-20 sm:px-8"
-      >
+      <section id="how-it-works" className="mx-auto w-full max-w-5xl px-5 pb-20 sm:px-8">
         <div className="grid gap-4 sm:grid-cols-3">
           {steps.map((step) => (
             <div
@@ -128,7 +142,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <footer className="mt-auto border-t border-night-line px-5 py-6 text-center text-xs text-ink-500 sm:px-8">
+      <footer className="border-t border-night-line px-5 py-6 text-center text-xs text-ink-500 sm:px-8">
         V-Notes AI — study notes from any video
       </footer>
     </div>
