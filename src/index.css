@@ -101,14 +101,17 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   background: #3A4453;
 }
 
-/* Sign-in panel ground. Flat white left the form floating in nothing, so it
-   gets a cool tint plus two soft brand glows - the blue and the cyan from the
-   logo - kept faint enough that the white card still reads as the focus. */
+/* Sign-in panel ground. A blue base rather than a near-white one, carrying the
+   two ends of the logo gradient as soft glows: brand blue from the top left,
+   cyan from the bottom right, with a third pass low down to keep the corner
+   from going flat. The white card sits on top of all of it, so the panel can
+   hold real colour and the form still reads as the focus. */
 .login-surface {
   background:
-    radial-gradient(58% 52% at 12% 8%, rgba(42, 95, 217, 0.13), transparent 70%),
-    radial-gradient(46% 44% at 92% 88%, rgba(14, 144, 160, 0.13), transparent 70%),
-    #F4F7FC;
+    radial-gradient(62% 55% at 10% 6%, rgba(42, 95, 217, 0.30), transparent 70%),
+    radial-gradient(52% 48% at 94% 90%, rgba(14, 144, 160, 0.26), transparent 72%),
+    radial-gradient(70% 40% at 50% 108%, rgba(42, 95, 217, 0.16), transparent 70%),
+    #E6EEFB;
 }
 
 /* Visible focus for keyboard users, in the accent rather than the browser blue */
