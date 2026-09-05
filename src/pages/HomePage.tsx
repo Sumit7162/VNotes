@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, Link2, Captions, NotebookPen } from "lucide-react";
-import BackgroundPaths from "@/components/ui/background-paths";
+import { BackgroundPaths } from "@/components/ui/background-paths";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "../hooks/useAuth";
 import { useDarkSurface } from "../hooks/useDarkSurface";
 
@@ -63,15 +64,22 @@ export function HomePage() {
         <section className="relative w-full min-h-0 flex-1 overflow-hidden">
           <BackgroundPaths
             title="V-Notes AI"
-            subtitle="Turn any video into structured study notes — headings, key points, formulas and tables."
+            // The component is min-h-screen by default; the hero has already
+            // been handed the space left over from the header.
+            className="min-h-0 h-full dark:bg-night-900"
             action={
-              <Link
-                to={isSignedIn ? "/dashboard" : "/login"}
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:border-white/30 hover:bg-white/10"
+              <Button
+                asChild
+                variant="ghost"
+                className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 text-black dark:text-white transition-all duration-300 group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10 hover:shadow-md dark:hover:shadow-neutral-800/50"
               >
-                {isSignedIn ? "Open dashboard" : "Get started free"}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+                <Link to={isSignedIn ? "/dashboard" : "/login"}>
+                  <span className="opacity-90 transition-opacity group-hover:opacity-100">
+                    {isSignedIn ? "Open dashboard" : "Get started free"}
+                  </span>
+                  <ArrowRight className="ml-3 h-4 w-4 opacity-70 transition-all duration-300 group-hover:translate-x-1.5 group-hover:opacity-100" />
+                </Link>
+              </Button>
             }
           />
 

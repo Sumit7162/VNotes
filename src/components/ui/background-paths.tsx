@@ -1,121 +1,156 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import "./background-paths.css";
 
-const PATHS_PER_GROUP = 36;
+function FloatingPaths({ position }: { position: number }) {
+    const paths = Array.from({ length: 36 }, (_, i) => ({
+        id: i,
+        d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
+            380 - i * 5 * position
+        } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
+            152 - i * 5 * position
+        } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
+            684 - i * 5 * position
+        } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
+        color: `rgba(15,23,42,${0.1 + i * 0.03})`,
+        width: 0.5 + i * 0.03,
+    }));
 
-/**
- * One fan of near-parallel arcs.
- *
- * Every curve is the same cubic swept across the canvas by its index: it enters
- * off the top-left, bends down through the middle and leaves past the bottom
- * right. `direction` mirrors the horizontal drift so two groups can be layered
- * and cross each other rather than sitting as one flat comb.
- */
-function FloatingPaths({ direction }: { direction: number }) {
-  const paths = Array.from({ length: PATHS_PER_GROUP }, (_, i) => {
-    const shift = i * 5 * direction;
-    const drop = i * 6;
-    return {
-      id: i,
-      d:
-        `M${-380 - shift} ${-189 + drop}` +
-        `C${-380 - shift} ${-189 + drop} ${-312 - shift} ${216 - drop} ${152 - shift} ${343 - drop}` +
-        `C${616 - shift} ${470 - drop} ${684 - shift} ${875 - drop} ${684 - shift} ${875 - drop}`,
-      width: 0.5 + i * 0.035,
-      opacity: 0.14 + i * 0.024,
-      // Measured off the reference recording: a streak covers a visible part of
-      // its curve in well under a second, which puts a full cycle near 12s, not
-      // the 20s+ that made the fan look static.
-      duration: 11 + (i % 7) * 1.6,
-      // Coprime-ish offsets so the fan never lines up and pulses in unison.
-      delay: -(i % 13) * 1.7,
-    };
-  });
-
-  return (
-    <svg
-      className="pointer-events-none absolute inset-0 h-full w-full text-white"
-      viewBox="0 0 696 316"
-      preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      aria-hidden="true"
-    >
-      {paths.map((path) => (
-        <path
-          key={path.id}
-          className="bgp-path"
-          d={path.d}
-          stroke="currentColor"
-          strokeWidth={path.width}
-          strokeOpacity={path.opacity}
-          // Normalises the dash units in background-paths.css to 0..1.
-          pathLength={1}
-          style={{
-            animationDuration: `${path.duration}s`,
-            animationDelay: `${path.delay}s`,
-          }}
-        />
-      ))}
-    </svg>
-  );
-}
-
-export interface BackgroundPathsProps {
-  title?: string;
-  subtitle?: string;
-  /** Rendered under the subtitle, e.g. a call to action. */
-  action?: ReactNode;
-  className?: string;
+    return (
+        <div className="absolute inset-0 pointer-events-none">
+            <svg
+                className="w-full h-full text-slate-950 dark:text-white"
+                viewBox="0 0 696 316"
+                fill="none"
+            >
+                <title>Background Paths</title>
+                {paths.map((path) => (
+                    <motion.path
+                        key={path.id}
+                        d={path.d}
+                        stroke="currentColor"
+                        strokeWidth={path.width}
+                        strokeOpacity={0.1 + path.id * 0.03}
+                        initial={{ pathLength: 0.3, opacity: 0.6 }}
+                        animate={{
+                            pathLength: 1,
+                            opacity: [0.3, 0.6, 0.3],
+                            pathOffset: [0, 1, 0],
+                        }}
+                        transition={{
+                            duration: 20 + Math.random() * 10,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: "linear",
+                        }}
+                    />
+                ))}
+            </svg>
+        </div>
+    );
 }
 
 export function BackgroundPaths({
-  title = "Background Paths",
-  subtitle,
-  action,
-  className,
-}: BackgroundPathsProps) {
-  const words = title.split(" ");
+    title = "Background Paths",
+    action,
+    className,
+}: {
+    title?: string;
+    /**
+     * Replaces the default call to action. Added so the hero can link somewhere
+     * real; omit it and the component renders exactly as it ships.
+     */
+    action?: ReactNode;
+    /**
+     * Added so the component can be dropped into a sized container. Upstream is
+     * min-h-screen, which overflows when it sits inside a flex row that has
+     * already been given the viewport.
+     */
+    className?: string;
+}) {
+    const words = title.split(" ");
 
-  return (
-    <div
-      className={cn(
-        "relative flex h-full w-full items-center justify-center overflow-hidden bg-night-900",
-        className
-      )}
-    >
-      <FloatingPaths direction={1} />
-      <FloatingPaths direction={-1} />
+    return (
+        <div
+            className={cn(
+                "relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-neutral-950",
+                className
+            )}
+        >
+            <div className="absolute inset-0">
+                <FloatingPaths position={1} />
+                <FloatingPaths position={-1} />
+            </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-4xl px-4 text-center">
-        <h1 className="mb-6 text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl">
-          {words.map((word, wordIndex) => (
-            <span key={`${word}-${wordIndex}`} className="mr-4 inline-block last:mr-0">
-              {word.split("").map((letter, letterIndex) => (
-                <span
-                  key={`${letter}-${letterIndex}`}
-                  className="bgp-letter bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent"
-                  style={{
-                    animationDelay: `${(wordIndex * 6 + letterIndex) * 0.05}s`,
-                  }}
+            <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2 }}
+                    className="max-w-4xl mx-auto"
                 >
-                  {letter}
-                </span>
-              ))}
-            </span>
-          ))}
-        </h1>
+                    <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold mb-8 tracking-tighter">
+                        {words.map((word, wordIndex) => (
+                            <span
+                                key={wordIndex}
+                                className="inline-block mr-4 last:mr-0"
+                            >
+                                {word.split("").map((letter, letterIndex) => (
+                                    <motion.span
+                                        key={`${wordIndex}-${letterIndex}`}
+                                        initial={{ y: 100, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{
+                                            delay:
+                                                wordIndex * 0.1 +
+                                                letterIndex * 0.03,
+                                            type: "spring",
+                                            stiffness: 150,
+                                            damping: 25,
+                                        }}
+                                        className="inline-block text-transparent bg-clip-text
+                                        bg-gradient-to-r from-neutral-900 to-neutral-700/80
+                                        dark:from-white dark:to-white/80"
+                                    >
+                                        {letter}
+                                    </motion.span>
+                                ))}
+                            </span>
+                        ))}
+                    </h1>
 
-        {subtitle && (
-          <p className="mx-auto mb-8 max-w-xl text-balance text-base leading-relaxed text-white/60 sm:text-lg">
-            {subtitle}
-          </p>
-        )}
-
-        {action}
-      </div>
-    </div>
-  );
+                    <div
+                        className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10
+                        dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg
+                        overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                    >
+                        {action ?? (
+                            <Button
+                                variant="ghost"
+                                className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md
+                            bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100
+                            text-black dark:text-white transition-all duration-300
+                            group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
+                            hover:shadow-md dark:hover:shadow-neutral-800/50"
+                            >
+                                <span className="opacity-90 group-hover:opacity-100 transition-opacity">
+                                    Discover Excellence
+                                </span>
+                                <span
+                                    className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5
+                                transition-all duration-300"
+                                >
+                                    →
+                                </span>
+                            </Button>
+                        )}
+                    </div>
+                </motion.div>
+            </div>
+        </div>
+    );
 }
 
 export default BackgroundPaths;
