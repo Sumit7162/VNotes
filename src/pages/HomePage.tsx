@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, Link2, Captions, NotebookPen } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "../hooks/useAuth";
 import { useDarkSurface } from "../hooks/useDarkSurface";
 
@@ -30,68 +29,46 @@ export function HomePage() {
   useDarkSurface();
 
   return (
-    <div className="bg-night-900 text-ink-300">
-      {/* The first screen is exactly one viewport tall: the header takes its
-          natural height and the canvas is handed every remaining pixel, so the
-          animation fills a desktop window rather than sitting in a band across
-          the top. Everything else lives below the fold. */}
-      <div className="flex h-screen min-h-[460px] flex-col">
-        <header className="flex shrink-0 items-center justify-between px-5 py-4 sm:px-8">
+    // neutral-950 matches the hero, which paints its own background and is taken
+    // verbatim from upstream, so the sections below meet it with no seam.
+    <div className="bg-neutral-950 text-ink-300">
+      {/* BackgroundPaths is min-h-screen and takes no layout props, so the page
+          is built around it: the hero owns the first screen outright, and the
+          header and scroll cue sit over it rather than taking height from it. */}
+      <div className="relative">
+        <BackgroundPaths title="V-Notes AI" />
+
+        <header className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4 sm:px-8">
           <div className="flex items-center gap-2.5">
             <img
               src="/logo-tile.png"
               alt=""
               width={36}
               height={36}
-              className="h-9 w-9 rounded-xl ring-1 ring-night-line"
+              className="h-9 w-9 rounded-xl ring-1 ring-white/10"
             />
-            <span className="font-display text-xl font-semibold tracking-tight text-paper-50">
+            <span className="font-display text-xl font-semibold tracking-tight text-white">
               V-Notes AI
             </span>
           </div>
 
           <Link
             to={isSignedIn ? "/dashboard" : "/login"}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-night-line bg-night-800 px-4 py-2 text-sm font-medium text-ink-300 transition-colors hover:border-accent-500 hover:text-paper-50"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-md transition-colors hover:border-white/30 hover:text-white"
           >
             {isSignedIn ? "Open dashboard" : "Sign in"}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </header>
 
-        {/* min-h-0 lets this flex child shrink to the space left over instead
-            of being pushed past the viewport by the artwork inside it. */}
-        <section className="relative w-full min-h-0 flex-1 overflow-hidden">
-          <BackgroundPaths
-            title="V-Notes AI"
-            // The component is min-h-screen by default; the hero has already
-            // been handed the space left over from the header.
-            className="min-h-0 h-full dark:bg-night-900"
-            action={
-              <Button
-                asChild
-                variant="ghost"
-                className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 text-black dark:text-white transition-all duration-300 group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10 hover:shadow-md dark:hover:shadow-neutral-800/50"
-              >
-                <Link to={isSignedIn ? "/dashboard" : "/login"}>
-                  <span className="opacity-90 transition-opacity group-hover:opacity-100">
-                    {isSignedIn ? "Open dashboard" : "Get started free"}
-                  </span>
-                  <ArrowRight className="ml-3 h-4 w-4 opacity-70 transition-all duration-300 group-hover:translate-x-1.5 group-hover:opacity-100" />
-                </Link>
-              </Button>
-            }
-          />
-
-          <a
-            href="#pitch"
-            aria-label="Scroll to find out more"
-            className="absolute inset-x-0 bottom-5 z-30 mx-auto flex w-fit items-center gap-2 rounded-full border border-night-line bg-night-800/80 px-4 py-2 text-[11px] font-medium uppercase tracking-wide text-ink-400 backdrop-blur-sm transition-colors hover:border-accent-500 hover:text-paper-50"
-          >
-            Scroll
-            <ChevronDown className="h-3.5 w-3.5" />
-          </a>
-        </section>
+        <a
+          href="#pitch"
+          aria-label="Scroll to find out more"
+          className="absolute inset-x-0 bottom-5 z-20 mx-auto flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-medium uppercase tracking-wide text-white/60 backdrop-blur-md transition-colors hover:border-white/30 hover:text-white"
+        >
+          Scroll
+          <ChevronDown className="h-3.5 w-3.5" />
+        </a>
       </div>
 
       <section id="pitch" className="mx-auto w-full max-w-3xl px-5 py-20 text-center sm:px-8">

@@ -1,36 +1,21 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { useMemo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 function FloatingPaths({ position }: { position: number }) {
-    const shouldReduceMotion = useReducedMotion();
-
-    // Built once per position rather than on every render. Upstream rebuilds
-    // this list inline and rolls a fresh Math.random() duration in the
-    // transition, so any re-render of the page - a TanStack Query refetch is
-    // enough - handed framer-motion 72 new durations and restarted every
-    // animation mid-flight. That is what the stutter was.
-    const paths = useMemo(
-        () =>
-            Array.from({ length: 36 }, (_, i) => ({
-                id: i,
-                d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
-                    380 - i * 5 * position
-                } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
-                    152 - i * 5 * position
-                } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
-                    684 - i * 5 * position
-                } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-                color: `rgba(15,23,42,${0.1 + i * 0.03})`,
-                width: 0.5 + i * 0.03,
-                duration: 20 + Math.random() * 10,
-            })),
-        [position]
-    );
+    const paths = Array.from({ length: 36 }, (_, i) => ({
+        id: i,
+        d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
+            380 - i * 5 * position
+        } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
+            152 - i * 5 * position
+        } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
+            684 - i * 5 * position
+        } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
+        color: `rgba(15,23,42,${0.1 + i * 0.03})`,
+        width: 0.5 + i * 0.03,
+    }));
 
     return (
         <div className="absolute inset-0 pointer-events-none">
@@ -38,9 +23,6 @@ function FloatingPaths({ position }: { position: number }) {
                 className="w-full h-full text-slate-950 dark:text-white"
                 viewBox="0 0 696 316"
                 fill="none"
-                // Thin strokes over a full-screen surface: accuracy here buys
-                // nothing visible and costs rasterisation on every frame.
-                shapeRendering="optimizeSpeed"
             >
                 <title>Background Paths</title>
                 {paths.map((path) => (
@@ -51,24 +33,16 @@ function FloatingPaths({ position }: { position: number }) {
                         strokeWidth={path.width}
                         strokeOpacity={0.1 + path.id * 0.03}
                         initial={{ pathLength: 0.3, opacity: 0.6 }}
-                        animate={
-                            shouldReduceMotion
-                                ? { pathLength: 1, opacity: 0.4 }
-                                : {
-                                      pathLength: 1,
-                                      opacity: [0.3, 0.6, 0.3],
-                                      pathOffset: [0, 1, 0],
-                                  }
-                        }
-                        transition={
-                            shouldReduceMotion
-                                ? { duration: 0 }
-                                : {
-                                      duration: path.duration,
-                                      repeat: Number.POSITIVE_INFINITY,
-                                      ease: "linear",
-                                  }
-                        }
+                        animate={{
+                            pathLength: 1,
+                            opacity: [0.3, 0.6, 0.3],
+                            pathOffset: [0, 1, 0],
+                        }}
+                        transition={{
+                            duration: 20 + Math.random() * 10,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: "linear",
+                        }}
                     />
                 ))}
             </svg>
@@ -78,31 +52,13 @@ function FloatingPaths({ position }: { position: number }) {
 
 export function BackgroundPaths({
     title = "Background Paths",
-    action,
-    className,
 }: {
     title?: string;
-    /**
-     * Replaces the default call to action. Added so the hero can link somewhere
-     * real; omit it and the component renders exactly as it ships.
-     */
-    action?: ReactNode;
-    /**
-     * Added so the component can be dropped into a sized container. Upstream is
-     * min-h-screen, which overflows when it sits inside a flex row that has
-     * already been given the viewport.
-     */
-    className?: string;
 }) {
     const words = title.split(" ");
 
     return (
-        <div
-            className={cn(
-                "relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-neutral-950",
-                className
-            )}
-        >
+        <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-neutral-950">
             <div className="absolute inset-0">
                 <FloatingPaths position={1} />
                 <FloatingPaths position={-1} />
@@ -150,31 +106,27 @@ export function BackgroundPaths({
                         dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg
                         overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
-                        {action ?? (
-                            <Button
-                                variant="ghost"
-                                className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md
+                        <Button
+                            variant="ghost"
+                            className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md
                             bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100
                             text-black dark:text-white transition-all duration-300
                             group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
                             hover:shadow-md dark:hover:shadow-neutral-800/50"
-                            >
-                                <span className="opacity-90 group-hover:opacity-100 transition-opacity">
-                                    Discover Excellence
-                                </span>
-                                <span
-                                    className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5
+                        >
+                            <span className="opacity-90 group-hover:opacity-100 transition-opacity">
+                                Discover Excellence
+                            </span>
+                            <span
+                                className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5
                                 transition-all duration-300"
-                                >
-                                    →
-                                </span>
-                            </Button>
-                        )}
+                            >
+                                →
+                            </span>
+                        </Button>
                     </div>
                 </motion.div>
             </div>
         </div>
     );
 }
-
-export default BackgroundPaths;
