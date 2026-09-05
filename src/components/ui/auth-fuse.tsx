@@ -216,6 +216,10 @@ export interface AuthUIProps {
   brand?: React.ReactNode;
   /** Rendered under the sign-in options, e.g. an error message. */
   footer?: React.ReactNode;
+  /** Classes for the left-hand panel, e.g. a tinted background. */
+  formPanelClassName?: string;
+  /** Classes for the block holding the sign-in options, e.g. a card. */
+  formCardClassName?: string;
   /**
    * Fills the right-hand panel instead of the background image. The quote still
    * renders on top of it, so this is a backdrop rather than a replacement for
@@ -299,6 +303,8 @@ export function AuthUI({
   brand,
   footer,
   asideSlot,
+  formPanelClassName,
+  formCardClassName,
 }: AuthUIProps) {
   const [isSignIn, setIsSignIn] = useState(true);
   const toggleForm = () => setIsSignIn((prev) => !prev);
@@ -322,8 +328,13 @@ export function AuthUI({
           display: none;
         }
       `}</style>
-      <div className="flex min-h-screen items-center justify-center p-6 md:min-h-0 md:p-0 md:py-12">
-        <div className="mx-auto grid w-[350px] gap-5">
+      <div
+        className={cn(
+          "flex min-h-screen items-center justify-center p-6 md:min-h-0",
+          formPanelClassName
+        )}
+      >
+        <div className={cn("mx-auto grid w-[350px] gap-5", formCardClassName)}>
           {brand}
 
           <div className="flex flex-col items-center gap-2 text-center">

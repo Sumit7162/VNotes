@@ -44,6 +44,11 @@ export function LoginPage() {
   return (
     <AuthUI
       asideSlot={<MatrixRain />}
+      formPanelClassName="login-surface"
+      // The Google button is a fixed 320px wide, so the card only gains its
+      // padding from sm up, where 420px minus p-8 still clears it. On a phone
+      // it drops the chrome and uses the full width instead of clipping.
+      formCardClassName="w-full max-w-[420px] sm:rounded-2xl sm:border sm:border-line sm:bg-paper-50/90 sm:p-8 sm:shadow-lg"
       title="Sign in to V-Notes AI"
       subtitle="Continue with Google — there is no password to remember."
       brand={
