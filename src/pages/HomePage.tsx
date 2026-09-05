@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, Link2, Captions, NotebookPen } from "lucide-react";
-import KineticMatrix from "@/components/ui/kinetic-matrix";
+import BackgroundPaths from "@/components/ui/background-paths";
 import { useAuth } from "../hooks/useAuth";
 import { useDarkSurface } from "../hooks/useDarkSurface";
 
@@ -58,12 +58,22 @@ export function HomePage() {
           </Link>
         </header>
 
-        {/* min-h-0 lets this flex child shrink to the space left over instead of
-            being pushed past the viewport by the canvas inside it. The canvas
-            paints #06070a, the same as bg-night-900, so there is no seam.
-            Drag across it, or click anywhere to fire a shockwave. */}
+        {/* min-h-0 lets this flex child shrink to the space left over instead
+            of being pushed past the viewport by the artwork inside it. */}
         <section className="relative w-full min-h-0 flex-1 overflow-hidden">
-          <KineticMatrix title="V-NOTES AI" className="h-full w-full" showControls={false} />
+          <BackgroundPaths
+            title="V-Notes AI"
+            subtitle="Turn any video into structured study notes — headings, key points, formulas and tables."
+            action={
+              <Link
+                to={isSignedIn ? "/dashboard" : "/login"}
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:border-white/30 hover:bg-white/10"
+              >
+                {isSignedIn ? "Open dashboard" : "Get started free"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            }
+          />
 
           <a
             href="#pitch"
@@ -77,9 +87,9 @@ export function HomePage() {
       </div>
 
       <section id="pitch" className="mx-auto w-full max-w-3xl px-5 py-20 text-center sm:px-8">
-        <h1 className="font-display text-3xl font-semibold tracking-tight text-paper-50 sm:text-4xl">
+        <h2 className="font-display text-3xl font-semibold tracking-tight text-paper-50 sm:text-4xl">
           Turn any video into notes worth keeping
-        </h1>
+        </h2>
         <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-400">
           Paste a YouTube link and get structured study notes back in seconds —
           headings, key points, formulas and tables, ready to read or print.
@@ -112,9 +122,9 @@ export function HomePage() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-night-600 text-cyan-400 ring-1 ring-inset ring-night-line">
                 {step.icon}
               </div>
-              <h2 className="mt-4 font-display text-lg font-semibold text-paper-50">
+              <h3 className="mt-4 font-display text-lg font-semibold text-paper-50">
                 {step.title}
-              </h2>
+              </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-ink-400">{step.body}</p>
             </div>
           ))}

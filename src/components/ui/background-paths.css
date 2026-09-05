@@ -1,0 +1,60 @@
+/* Each path carries pathLength="1", so its dash lengths are expressed as a
+   fraction of the curve rather than in user units. That makes one rule work for
+   every curve regardless of how long it actually is: a segment covering 30% of
+   the path travels the whole way and wraps. */
+.bgp-path {
+  stroke-dasharray: 0.3 0.7;
+  animation: bgp-flow linear infinite, bgp-breathe ease-in-out infinite;
+}
+
+@keyframes bgp-flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes bgp-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+/* Letters rise into place, staggered by their index. */
+.bgp-letter {
+  display: inline-block;
+  animation: bgp-letter-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes bgp-letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* A wall of drifting lines is a lot of motion. Show the artwork, hold it
+   still, and let the letters simply be there. */
+@media (prefers-reduced-motion: reduce) {
+  .bgp-path {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.5;
+  }
+
+  .bgp-letter {
+    animation: none;
+  }
+}
