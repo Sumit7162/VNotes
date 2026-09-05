@@ -98,10 +98,10 @@ export function VideoSubmitPage() {
         )}
 
         {processMutation.isSuccess && (
-          <div className="mt-4 p-3 bg-success-50 border border-green-200 rounded-lg flex items-start gap-2">
+          <div className="mt-4 p-3 bg-success-50 border border-success-200 rounded-lg flex items-start gap-2">
             <CheckCircle className="h-5 w-5 text-success-600 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-green-800">Video Submitted!</p>
+              <p className="text-sm font-medium text-success-700">Video Submitted!</p>
               <p className="text-xs text-success-600 mt-1">
                 Your video is being processed. You can track progress on the dashboard.
               </p>
@@ -120,13 +120,13 @@ export function VideoSubmitPage() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${remainingLong > 0 ? "bg-orange-500" : "bg-danger-500"}`} />
+            <div className={`w-2 h-2 rounded-full ${remainingLong > 0 ? "bg-gold" : "bg-danger-500"}`} />
             <span className="text-ink-600">
               <span className="font-medium">{remainingLong}</span> long videos remaining
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500" />
+            <div className="w-2 h-2 rounded-full bg-teal" />
             <span className="text-ink-600">
               Max <span className="font-medium">{maxDuration}</span> min per video
             </span>

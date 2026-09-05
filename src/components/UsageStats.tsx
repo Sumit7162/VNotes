@@ -23,7 +23,7 @@ export function UsageStats({ usage, totalVideos }: UsageStatsProps) {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-paper-50 rounded-2xl border border-line p-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-violet-100 text-violet-600">
+            <div className="p-2.5 rounded-xl bg-plum-100 text-plum-600">
               <Video className="h-5 w-5" />
             </div>
             <div>
@@ -45,7 +45,7 @@ export function UsageStats({ usage, totalVideos }: UsageStatsProps) {
         </div>
         <div className="bg-paper-50 rounded-2xl border border-line p-4 shadow-sm col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-100 text-amber-600">
+            <div className="p-2.5 rounded-xl bg-gold-100 text-gold-600">
               <Clock className="h-5 w-5" />
             </div>
             <div>
@@ -60,7 +60,7 @@ export function UsageStats({ usage, totalVideos }: UsageStatsProps) {
         <div className="bg-paper-50 rounded-2xl border border-line p-4 shadow-sm">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-emerald-100 text-success-600">
+              <div className="p-1.5 rounded-lg bg-success-100 text-success-600">
                 <Zap className="h-4 w-4" />
               </div>
               <span className="text-sm font-semibold text-ink-800">Short Videos</span>
@@ -84,7 +84,7 @@ export function UsageStats({ usage, totalVideos }: UsageStatsProps) {
         <div className="bg-paper-50 rounded-2xl border border-line p-4 shadow-sm">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-orange-100 text-orange-600">
+              <div className="p-1.5 rounded-lg bg-gold-100 text-gold-700">
                 <Timer className="h-4 w-4" />
               </div>
               <span className="text-sm font-semibold text-ink-800">Long Videos</span>

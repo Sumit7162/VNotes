@@ -40,6 +40,34 @@ export default {
           800: "#742A19",
           DEFAULT: "#B4442A",
         },
+        // Three more hues so colour can actually carry meaning - each stage of
+        // the pipeline, and each statistic, gets its own. They are all pulled
+        // toward the same warm, slightly desaturated register as the accent, so
+        // the interface reads as colourful rather than as a set of stock hues.
+        gold: {
+          50: "#FDF6E9",
+          100: "#F7E8C6",
+          200: "#EDD69C",
+          600: "#B07D12",
+          700: "#8A6109",
+          DEFAULT: "#B07D12",
+        },
+        teal: {
+          50: "#EDF6F4",
+          100: "#D0E7E2",
+          200: "#A7D2CA",
+          600: "#2B7A72",
+          700: "#1F5C56",
+          DEFAULT: "#2B7A72",
+        },
+        plum: {
+          50: "#F9F0F4",
+          100: "#EEDAE4",
+          200: "#DFBACD",
+          600: "#7B3F5E",
+          700: "#61304A",
+          DEFAULT: "#7B3F5E",
+        },
         line: {
           DEFAULT: "#E7E0D6",
           strong: "#D8CFC1",

@@ -7,14 +7,52 @@ import { videosApi } from "../services/videos";
 import type { ReactNode } from "react";
 import { formatDateTime } from "../utils/datetime";
 
-const statusConfig: Record<string, { icon: ReactNode; color: string; label: string }> = {
-  pending: { icon: <Clock className="h-4 w-4" />, color: "text-ink-500", label: "Pending" },
-  downloading: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-accent-600", label: "Downloading" },
-  extracting_audio: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-accent-600", label: "Extracting Audio" },
-  transcribing: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-accent-600", label: "Transcribing" },
-  generating_notes: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-accent-600", label: "Generating Notes" },
-  completed: { icon: <CheckCircle className="h-4 w-4" />, color: "text-success-600", label: "Completed" },
-  failed: { icon: <AlertCircle className="h-4 w-4" />, color: "text-danger-600", label: "Failed" },
+// Each stage of the pipeline gets its own hue, so a glance at a list of cards
+// tells you what is happening without reading any of the labels. `tone` styles
+// the badge, `bar` the progress track beneath it, so the two always agree.
+const statusConfig: Record<string, { icon: ReactNode; tone: string; bar: string; label: string }> = {
+  pending: {
+    icon: <Clock className="h-3.5 w-3.5" />,
+    tone: "bg-paper-200 text-ink-600 ring-line",
+    bar: "bg-ink-400",
+    label: "Pending",
+  },
+  downloading: {
+    icon: <Loader2 className="h-3.5 w-3.5 animate-spin" />,
+    tone: "bg-gold-50 text-gold-700 ring-gold-200",
+    bar: "bg-gold",
+    label: "Downloading",
+  },
+  extracting_audio: {
+    icon: <Loader2 className="h-3.5 w-3.5 animate-spin" />,
+    tone: "bg-gold-50 text-gold-700 ring-gold-200",
+    bar: "bg-gold",
+    label: "Extracting Audio",
+  },
+  transcribing: {
+    icon: <Loader2 className="h-3.5 w-3.5 animate-spin" />,
+    tone: "bg-teal-50 text-teal-700 ring-teal-200",
+    bar: "bg-teal",
+    label: "Transcribing",
+  },
+  generating_notes: {
+    icon: <Loader2 className="h-3.5 w-3.5 animate-spin" />,
+    tone: "bg-plum-50 text-plum-700 ring-plum-200",
+    bar: "bg-plum",
+    label: "Generating Notes",
+  },
+  completed: {
+    icon: <CheckCircle className="h-3.5 w-3.5" />,
+    tone: "bg-success-50 text-success-700 ring-success-100",
+    bar: "bg-success",
+    label: "Completed",
+  },
+  failed: {
+    icon: <AlertCircle className="h-3.5 w-3.5" />,
+    tone: "bg-danger-50 text-danger-700 ring-danger-200",
+    bar: "bg-danger",
+    label: "Failed",
+  },
 };
 
 const processingSteps = [
@@ -67,7 +105,7 @@ export function VideoCard({ video }: VideoCardProps) {
       <div className="bg-paper-50 rounded-2xl border border-line p-4 shadow-sm hover:shadow-md hover:border-accent-200 transition-all duration-200">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex items-start gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0 w-10 h-10 bg-accent-100 rounded-xl flex items-center justify-center">
+            <div className="flex-shrink-0 w-10 h-10 bg-accent-50 ring-1 ring-inset ring-accent-100 rounded-xl flex items-center justify-center">
               <Video className="h-5 w-5 text-accent-600" />
             </div>
             <div className="flex-1 min-w-0">
@@ -78,7 +116,9 @@ export function VideoCard({ video }: VideoCardProps) {
                 {video.youtube_url}
               </p>
               <div className="flex items-center gap-3 mt-2 flex-wrap">
-                <span className={`inline-flex items-center gap-1 text-xs font-medium ${status.color}`}>
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset ${status.tone}`}
+                >
                   {status.icon}
                   {status.label}
                 </span>
@@ -100,7 +140,7 @@ export function VideoCard({ video }: VideoCardProps) {
                 <div className="mt-4">
                   <div className="h-1.5 overflow-hidden rounded-full bg-paper-200">
                     <div
-                      className="h-full rounded-full bg-accent transition-all duration-500"
+                      className={`h-full rounded-full ${status.bar} transition-all duration-500`}
                       style={{ width: `${Math.max(progress, 8)}%` }}
                     />
                   </div>
@@ -168,7 +208,7 @@ export function VideoCard({ video }: VideoCardProps) {
           />
           <div className="relative bg-paper-50 rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-danger-100 flex items-center justify-center">
                 <Trash2 className="h-5 w-5 text-danger-600" />
               </div>
               <div>
@@ -207,7 +247,7 @@ export function VideoCard({ video }: VideoCardProps) {
                   });
                 }}
                 disabled={deleteMutation.isPending}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors disabled:opacity-50 inline-flex items-center gap-2"
+                className="px-4 py-2 text-sm font-medium text-white bg-danger-600 hover:bg-danger-700 rounded-lg transition-colors disabled:opacity-50 inline-flex items-center gap-2"
                 id="confirm-delete-video"
               >
                 {deleteMutation.isPending && (
