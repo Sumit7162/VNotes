@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { AuthUI } from "@/components/ui/auth-fuse";
+import { MatrixRain } from "@/components/ui/matrix-rain";
 import { useDarkSurface } from "../hooks/useDarkSurface";
 
 export function LoginPage() {
@@ -46,6 +47,7 @@ export function LoginPage() {
 
   return (
     <AuthUI
+      asideSlot={<MatrixRain />}
       title="Sign in to V-Notes AI"
       subtitle="Continue with Google — there is no password to remember."
       brand={

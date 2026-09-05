@@ -216,6 +216,12 @@ export interface AuthUIProps {
   brand?: React.ReactNode;
   /** Rendered under the sign-in options, e.g. an error message. */
   footer?: React.ReactNode;
+  /**
+   * Fills the right-hand panel instead of the background image. The quote still
+   * renders on top of it, so this is a backdrop rather than a replacement for
+   * the whole panel.
+   */
+  asideSlot?: React.ReactNode;
 }
 
 const defaultSignInContent = {
@@ -292,6 +298,7 @@ export function AuthUI({
   showEmailForms = false,
   brand,
   footer,
+  asideSlot,
 }: AuthUIProps) {
   const [isSignIn, setIsSignIn] = useState(true);
   const toggleForm = () => setIsSignIn((prev) => !prev);
@@ -351,13 +358,20 @@ export function AuthUI({
       </div>
 
       <div
-        className="hidden md:block relative bg-cover bg-center transition-all duration-500 ease-in-out"
-        style={{ backgroundImage: `url(${currentContent.image.src})` }}
-        role="img"
-        aria-label={currentContent.image.alt}
-        key={currentContent.image.src}
+        className={cn(
+          "hidden md:block relative overflow-hidden transition-all duration-500 ease-in-out",
+          !asideSlot && "bg-cover bg-center"
+        )}
+        style={asideSlot ? undefined : { backgroundImage: `url(${currentContent.image.src})` }}
+        role={asideSlot ? undefined : "img"}
+        aria-label={asideSlot ? undefined : currentContent.image.alt}
+        key={asideSlot ? "aside" : currentContent.image.src}
       >
-        <div className="absolute inset-0 bg-background/35" />
+        {asideSlot ? (
+          <div className="absolute inset-0">{asideSlot}</div>
+        ) : (
+          <div className="absolute inset-0 bg-background/35" />
+        )}
         <div className="absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-background to-transparent" />
 
         <div className="relative z-10 flex h-full flex-col items-center justify-end p-2 pb-6">
