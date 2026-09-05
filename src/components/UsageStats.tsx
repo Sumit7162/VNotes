@@ -23,7 +23,7 @@ export function UsageStats({ usage, totalVideos }: UsageStatsProps) {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-paper-50 rounded-2xl border border-line p-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-plum-100 text-plum-600">
+            <div className="p-2.5 rounded-xl bg-violet-100 text-violet-600">
               <Video className="h-5 w-5" />
             </div>
             <div>

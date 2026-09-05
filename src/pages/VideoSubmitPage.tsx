@@ -126,7 +126,7 @@ export function VideoSubmitPage() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-teal" />
+            <div className="w-2 h-2 rounded-full bg-cyan" />
             <span className="text-ink-600">
               Max <span className="font-medium">{maxDuration}</span> min per video
             </span>

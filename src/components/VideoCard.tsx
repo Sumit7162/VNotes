@@ -31,14 +31,14 @@ const statusConfig: Record<string, { icon: ReactNode; tone: string; bar: string;
   },
   transcribing: {
     icon: <Loader2 className="h-3.5 w-3.5 animate-spin" />,
-    tone: "bg-teal-50 text-teal-700 ring-teal-200",
-    bar: "bg-teal",
+    tone: "bg-cyan-50 text-cyan-700 ring-cyan-200",
+    bar: "bg-cyan",
     label: "Transcribing",
   },
   generating_notes: {
     icon: <Loader2 className="h-3.5 w-3.5 animate-spin" />,
-    tone: "bg-plum-50 text-plum-700 ring-plum-200",
-    bar: "bg-plum",
+    tone: "bg-violet-50 text-violet-700 ring-violet-200",
+    bar: "bg-violet",
     label: "Generating Notes",
   },
   completed: {

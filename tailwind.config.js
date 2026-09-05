@@ -7,98 +7,103 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Warm paper rather than a cold blue-grey. The whole point of the
-        // palette is that a note-taking app should feel like paper, so the
-        // neutrals carry a little red and yellow instead of blue.
+        // A cool, near-white ground rather than a tinted gradient. The old page
+        // background layered a blue radial over a blue linear gradient, which is
+        // what made every screen feel washed; flat surfaces let the accent do
+        // the work instead.
         paper: {
-          50: "#FFFDFA",
-          100: "#FAF7F2",
-          200: "#F3EEE6",
-          300: "#EBE4D9",
+          50: "#FFFFFF",
+          100: "#F7F9FC",
+          200: "#EDF1F7",
+          300: "#E2E8F1",
         },
-        // A single ink ramp. Previously the app mixed Tailwind's slate and gray
-        // scales at random, which is a large part of why it read as generic.
+        // One cool neutral ramp. The app previously mixed Tailwind's slate and
+        // gray scales at random, which reads as unconsidered however good the
+        // accent is.
         ink: {
-          300: "#D6D3D1",
-          400: "#A8A29E",
-          500: "#78716C",
-          600: "#57534E",
-          700: "#44403C",
-          800: "#292524",
-          900: "#1C1917",
-          DEFAULT: "#1C1917",
+          300: "#C7D0DC",
+          400: "#97A3B4",
+          500: "#667588",
+          600: "#4A5769",
+          700: "#35404F",
+          800: "#202936",
+          900: "#131A24",
+          DEFAULT: "#131A24",
         },
-        // One accent, used sparingly and always flat. Rust reads as considered
-        // where the old sky-to-indigo gradient read as a default.
+        // Sampled from the logo, whose stroke runs #3040A0 indigo -> #2080C0
+        // blue -> #20D0D0 cyan. Used flat and sparingly: one confident blue,
+        // never a gradient.
         accent: {
-          50: "#FDF4F1",
-          100: "#F9E3DC",
-          200: "#F0C4B6",
-          300: "#E09B85",
-          600: "#B4442A",
-          700: "#93351F",
-          800: "#742A19",
-          DEFAULT: "#B4442A",
+          50: "#EEF4FF",
+          100: "#DAE6FE",
+          200: "#B9CDFC",
+          300: "#8FADF8",
+          600: "#2A5FD9",
+          700: "#1F49AC",
+          800: "#1A3A85",
+          DEFAULT: "#2A5FD9",
         },
-        // Three more hues so colour can actually carry meaning - each stage of
-        // the pipeline, and each statistic, gets its own. They are all pulled
-        // toward the same warm, slightly desaturated register as the accent, so
-        // the interface reads as colourful rather than as a set of stock hues.
+        // The cyan end of the logo gradient, darkened enough to carry text.
+        cyan: {
+          50: "#E9FAFB",
+          100: "#C7F1F4",
+          200: "#97E3E9",
+          600: "#0E90A0",
+          700: "#0B7280",
+          DEFAULT: "#0E90A0",
+        },
+        // The indigo end, pushed violet so it is distinguishable from `accent`
+        // when the two sit side by side in a list of statuses.
+        violet: {
+          50: "#F1EFFC",
+          100: "#DFDAF8",
+          200: "#C3BAF1",
+          600: "#5B47C4",
+          700: "#47379B",
+          DEFAULT: "#5B47C4",
+        },
+        // The one warm hue, kept for the download stage: against a blue system
+        // an amber reads instantly as "something is happening".
         gold: {
-          50: "#FDF6E9",
-          100: "#F7E8C6",
-          200: "#EDD69C",
-          600: "#B07D12",
-          700: "#8A6109",
-          DEFAULT: "#B07D12",
-        },
-        teal: {
-          50: "#EDF6F4",
-          100: "#D0E7E2",
-          200: "#A7D2CA",
-          600: "#2B7A72",
-          700: "#1F5C56",
-          DEFAULT: "#2B7A72",
-        },
-        plum: {
-          50: "#F9F0F4",
-          100: "#EEDAE4",
-          200: "#DFBACD",
-          600: "#7B3F5E",
-          700: "#61304A",
-          DEFAULT: "#7B3F5E",
+          50: "#FEF6E7",
+          100: "#FCE9C2",
+          200: "#F7D593",
+          600: "#A9700B",
+          700: "#855706",
+          DEFAULT: "#A9700B",
         },
         line: {
-          DEFAULT: "#E7E0D6",
-          strong: "#D8CFC1",
+          DEFAULT: "#DEE5EE",
+          strong: "#C9D3E0",
         },
         success: {
-          50: "#F1F6F0",
-          100: "#DFEBDD",
-          600: "#4D7C4A",
-          700: "#3D6339",
-          DEFAULT: "#4D7C4A",
+          50: "#ECF7F0",
+          100: "#D3EDDD",
+          200: "#AEDCC1",
+          600: "#1F7A4C",
+          700: "#175C39",
+          DEFAULT: "#1F7A4C",
         },
         danger: {
-          50: "#FCF2F0",
-          100: "#F7E1DD",
-          200: "#EFC5BD",
-          600: "#B23A2E",
-          700: "#8F2C22",
-          800: "#71231B",
-          DEFAULT: "#B23A2E",
+          50: "#FDF1F1",
+          100: "#FADEDE",
+          200: "#F3BFBF",
+          600: "#C0362F",
+          700: "#9A2A24",
+          800: "#7A211C",
+          DEFAULT: "#C0362F",
         },
       },
       fontFamily: {
-        // Fraunces carries the warmth; Inter does the reading. Both are loaded
-        // in index.html - the previous stylesheet named Inter but nothing ever
-        // fetched it, so the app silently rendered in system-ui.
+        // Fraunces carries the headings, Inter does the reading. Both are loaded
+        // in index.html - the stylesheet used to name Inter while nothing ever
+        // fetched it, so every screen silently rendered in system-ui.
         display: ['Fraunces', 'Georgia', 'Times New Roman', 'serif'],
         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       borderRadius: {
-        // Three steps, used consistently: controls, cards, pills. The old code
+        // Three steps used consistently: controls, cards, pills. The original
         // mixed six radii with no rule behind which went where.
         DEFAULT: "6px",
         md: "6px",
@@ -108,11 +113,12 @@ export default {
         "3xl": "18px",
       },
       boxShadow: {
-        // Paper does not glow. One quiet lift for hover, one for popovers.
-        sm: "0 1px 2px rgba(28, 25, 23, 0.04)",
-        DEFAULT: "0 1px 3px rgba(28, 25, 23, 0.06)",
-        md: "0 2px 8px rgba(28, 25, 23, 0.07)",
-        lg: "0 6px 20px rgba(28, 25, 23, 0.09)",
+        // Two quiet steps, neutral rather than tinted. Coloured shadows under
+        // buttons were part of what made the old interface look generated.
+        sm: "0 1px 2px rgba(19, 26, 36, 0.05)",
+        DEFAULT: "0 1px 3px rgba(19, 26, 36, 0.07)",
+        md: "0 2px 8px rgba(19, 26, 36, 0.08)",
+        lg: "0 6px 20px rgba(19, 26, 36, 0.10)",
       },
     },
   },
