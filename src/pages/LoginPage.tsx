@@ -5,12 +5,8 @@ import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { AuthUI } from "@/components/ui/auth-fuse";
 import { MatrixRain } from "@/components/ui/matrix-rain";
-import { useDarkSurface } from "../hooks/useDarkSurface";
 
 export function LoginPage() {
-  // The public surface is dark; the signed-in app stays light.
-  useDarkSurface();
-
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -78,7 +74,7 @@ export function LoginPage() {
           {error && (
             <p
               role="alert"
-              className="rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive-foreground"
+              className="rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
             >
               {error}
             </p>

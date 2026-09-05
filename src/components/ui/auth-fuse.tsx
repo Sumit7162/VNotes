@@ -372,14 +372,31 @@ export function AuthUI({
         ) : (
           <div className="absolute inset-0 bg-background/35" />
         )}
-        <div className="absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-background to-transparent" />
+        <div
+          className={cn(
+            "absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t to-transparent",
+            // An aside slot supplies its own dark artwork, so the fade has to
+            // come off that rather than off the page surface, which may be white.
+            asideSlot ? "from-[#06070a]" : "from-background"
+          )}
+        />
 
         <div className="relative z-10 flex h-full flex-col items-center justify-end p-2 pb-6">
-          <blockquote className="space-y-2 text-center text-foreground">
+          <blockquote
+            className={cn(
+              "space-y-2 text-center",
+              asideSlot ? "text-white" : "text-foreground"
+            )}
+          >
             <p className="text-lg font-medium">
               “<Typewriter key={currentContent.quote.text} text={currentContent.quote.text} speed={60} />”
             </p>
-            <cite className="block text-sm font-light text-muted-foreground not-italic">
+            <cite
+              className={cn(
+                "block text-sm font-light not-italic",
+                asideSlot ? "text-white/60" : "text-muted-foreground"
+              )}
+            >
               — {currentContent.quote.author}
             </cite>
           </blockquote>
