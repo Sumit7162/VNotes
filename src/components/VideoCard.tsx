@@ -1,0 +1,224 @@
+import { useState } from "react";
+import { Video, Clock, CheckCircle, AlertCircle, Loader2, Trash2 } from "lucide-react";
+import type { Video as VideoType } from "../types";
+import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { videosApi } from "../services/videos";
+import type { ReactNode } from "react";
+import { formatDateTime } from "../utils/datetime";
+
+const statusConfig: Record<string, { icon: ReactNode; color: string; label: string }> = {
+  pending: { icon: <Clock className="h-4 w-4" />, color: "text-gray-500", label: "Pending" },
+  downloading: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-blue-500", label: "Downloading" },
+  extracting_audio: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-blue-500", label: "Extracting Audio" },
+  transcribing: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-blue-500", label: "Transcribing" },
+  generating_notes: { icon: <Loader2 className="h-4 w-4 animate-spin" />, color: "text-blue-500", label: "Generating Notes" },
+  completed: { icon: <CheckCircle className="h-4 w-4" />, color: "text-green-500", label: "Completed" },
+  failed: { icon: <AlertCircle className="h-4 w-4" />, color: "text-red-500", label: "Failed" },
+};
+
+const processingSteps = [
+  { status: "pending", label: "Queued" },
+  { status: "downloading", label: "Download" },
+  { status: "extracting_audio", label: "Audio" },
+  { status: "transcribing", label: "Transcript" },
+  { status: "generating_notes", label: "Notes" },
+  { status: "completed", label: "Done" },
+];
+
+// "10:00" next to a "9:27 AM" timestamp reads as a second clock time, so a
+// duration is always spelled out with its units.
+function formatDuration(seconds: number | null): string | null {
+  if (!seconds || seconds <= 0) return null;
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.round((seconds % 3600) / 60);
+  if (hours > 0) return `${hours} hr ${minutes} min`;
+  if (minutes > 0) return `${minutes} min`;
+  return `${seconds} sec`;
+}
+
+interface VideoCardProps {
+  video: VideoType;
+}
+
+export function VideoCard({ video }: VideoCardProps) {
+  const [showConfirm, setShowConfirm] = useState(false);
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: () => videosApi.delete(video.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["usage"] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    },
+  });
+
+  const status = statusConfig[video.status] || statusConfig.pending;
+  const currentStep = Math.max(
+    0,
+    processingSteps.findIndex((step) => step.status === video.status)
+  );
+  const isActive = video.status !== "completed" && video.status !== "failed";
+  const progress = Math.round((currentStep / (processingSteps.length - 1)) * 100);
+
+  return (
+    <>
+      <div className="bg-white/90 rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-200">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
+            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-sky-100 to-indigo-100 rounded-xl flex items-center justify-center">
+              <Video className="h-5 w-5 text-sky-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-sm font-semibold text-slate-900 truncate">
+                {video.title || "Processing..."}
+              </h3>
+              <p className="text-xs text-slate-500 truncate mt-0.5">
+                {video.youtube_url}
+              </p>
+              <div className="flex items-center gap-3 mt-2 flex-wrap">
+                <span className={`inline-flex items-center gap-1 text-xs font-medium ${status.color}`}>
+                  {status.icon}
+                  {status.label}
+                </span>
+                {formatDuration(video.duration_seconds) && (
+                  <span className="text-xs text-slate-400">
+                    {formatDuration(video.duration_seconds)}
+                  </span>
+                )}
+                <span className="text-xs text-slate-400">
+                  {formatDateTime(video.created_at)}
+                </span>
+              </div>
+              {video.status === "failed" && video.error_message && (
+                <p className="text-xs text-red-500 mt-2 bg-red-50 rounded-lg px-2 py-1">
+                  {video.error_message}
+                </p>
+              )}
+              {isActive && (
+                <div className="mt-4">
+                  <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 transition-all duration-500"
+                      style={{ width: `${Math.max(progress, 8)}%` }}
+                    />
+                  </div>
+                  <div className="mt-2 flex justify-between text-[11px] font-medium text-slate-400">
+                    {processingSteps.map((step, index) => {
+                      const isCurrent = index === currentStep;
+                      const isDone = index < currentStep;
+
+                      let alignmentClass = "text-center flex-1";
+                      if (index === 0) alignmentClass = "text-left flex-1";
+                      else if (index === processingSteps.length - 1) alignmentClass = "text-right flex-1";
+
+                      return (
+                        <span
+                          key={step.status}
+                          className={`${alignmentClass} ${
+                            isCurrent
+                              ? "text-sky-700"
+                              : isDone
+                                ? "text-slate-600"
+                                : ""
+                          }`}
+                        >
+                          {step.label}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex-shrink-0 flex items-center gap-2 self-end sm:self-start">
+            {video.status === "completed" && (
+              <Link
+                to={`/notes/${video.id}`}
+                className="text-xs font-medium text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                View Notes
+              </Link>
+            )}
+            <button
+              onClick={() => setShowConfirm(true)}
+              disabled={deleteMutation.isPending}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors disabled:opacity-50"
+              title="Delete video"
+              id={`delete-video-${video.id}`}
+            >
+              {deleteMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Trash2 className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Delete confirmation modal */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowConfirm(false)}
+          />
+          <div className="relative bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                <Trash2 className="h-5 w-5 text-red-600" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">
+                  Delete Video
+                </h3>
+                <p className="text-xs text-gray-500">
+                  This action cannot be undone
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">
+              Are you sure you want to delete{" "}
+              <span className="font-medium text-gray-900">
+                {video.title || "this video"}
+              </span>
+              ? All associated notes and files will be permanently removed.
+            </p>
+            {deleteMutation.isError && (
+              <p className="text-xs text-red-500 mb-4 bg-red-50 rounded px-3 py-2">
+                Failed to delete. Please try again.
+              </p>
+            )}
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowConfirm(false)}
+                disabled={deleteMutation.isPending}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  deleteMutation.mutate(undefined, {
+                    onSuccess: () => setShowConfirm(false),
+                  });
+                }}
+                disabled={deleteMutation.isPending}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors disabled:opacity-50 inline-flex items-center gap-2"
+                id="confirm-delete-video"
+              >
+                {deleteMutation.isPending && (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                )}
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

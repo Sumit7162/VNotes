@@ -1,0 +1,80 @@
+export interface User {
+  id: string;
+  google_id: string;
+  email: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  plan: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type VideoStatus =
+  | "pending"
+  | "downloading"
+  | "extracting_audio"
+  | "transcribing"
+  | "generating_notes"
+  | "completed"
+  | "failed";
+
+export interface Video {
+  id: string;
+  youtube_url: string;
+  title: string | null;
+  duration_seconds: number | null;
+  status: VideoStatus;
+  error_message: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface VideoListResponse {
+  videos: Video[];
+  total: number;
+}
+
+export interface Note {
+  id: string;
+  video_id: string;
+  markdown_content: string;
+  model_used: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UsageStats {
+  date: string;
+  videos_processed: number;
+  short_videos_processed: number;
+  minutes_processed: number;
+  daily_limit: number;
+  daily_short_limit: number;
+  remaining_videos: number;
+  remaining_short_videos: number;
+  max_duration_minutes: number;
+  remaining_minutes: number;
+  total_videos: number;
+}
+
+export interface UsageData {
+  date: string;
+  videos_processed: number;
+  short_videos_processed: number;
+  minutes_processed: number;
+  daily_limit: number;
+  daily_short_limit: number;
+  remaining_videos: number;
+  remaining_short_videos: number;
+  max_duration_minutes: number;
+  remaining_minutes: number;
+}
+
+export interface UsageSummary {
+  total_videos: number;
+  today: UsageData;
+}
+
+export interface VideoProcessRequest {
+  youtube_url: string;
+}
