@@ -80,7 +80,7 @@ export function HomePage() {
             paints #06070a, the same as bg-night-900, so there is no seam.
             Drag across it, or click anywhere to fire a shockwave. */}
         <section className="relative w-full min-h-0 flex-1 overflow-hidden">
-          <KineticMatrix title="V-NOTES AI" className="h-full w-full" />
+          <KineticMatrix title="V-NOTES AI" className="h-full w-full" showControls={false} />
 
           <a
             href="#pitch"
@@ -117,10 +117,6 @@ export function HomePage() {
             How it works
           </a>
         </div>
-
-        <p className="mt-4 text-xs text-ink-500">
-          Free plan: 10 short videos a day, or 2 up to 30 minutes.
-        </p>
       </section>
 
       <section id="how-it-works" className="mx-auto w-full max-w-5xl px-5 pb-20 sm:px-8">

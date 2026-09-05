@@ -37,11 +37,18 @@ interface GravitationalShockwave {
 export interface KineticMatrixProps {
     title?: string;
     className?: string;
+    /**
+     * Show the PULSE / FREEZE control deck. Defaults to true so the component
+     * behaves as shipped; turn it off where the lattice is decorative, such as
+     * a landing-page hero, and the canvas still responds to clicks and drags.
+     */
+    showControls?: boolean;
 }
 
 export function KineticMatrix({
     title = "TOPOLOGY",
     className = "",
+    showControls = true,
 }: KineticMatrixProps) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -457,6 +464,7 @@ export function KineticMatrix({
             {/* Content Deck Wrapper with Safe Padding */}
             <div className="relative z-20 flex h-full w-full flex-col justify-between p-6 md:p-10">
                 {/* Top Header Deck */}
+                {showControls ? (
                 <header className="flex w-full items-center justify-between font-mono text-[11px] text-neutral-500 dark:text-neutral-400">
                     <div className="flex items-center gap-2">
                         <button
@@ -477,6 +485,9 @@ export function KineticMatrix({
                         </button>
                     </div>
                 </header>
+                ) : (
+                    <div />
+                )}
 
                 {/* Center Hero Stencil Typography */}
                 <main className="pointer-events-none flex flex-col items-center justify-center text-center">
