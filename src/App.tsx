@@ -11,11 +11,41 @@ import { NotesListPage } from "./pages/NotesListPage";
 import { NotesViewerPage } from "./pages/NotesViewerPage";
 import { ProfilePage } from "./pages/ProfilePage";
 
+// Remembering the collapsed state per browser keeps the layout from jumping
+// back to full width on every navigation and reload.
+const SIDEBAR_COLLAPSED_KEY = "vnotes:sidebar-collapsed";
+
+function readCollapsedPreference(): boolean {
+  try {
+    return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === "true";
+  } catch {
+    // Private windows and blocked site data make storage throw on access.
+    return false;
+  }
+}
+
 function AppLayout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(readCollapsedPreference);
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed((previous) => {
+      const next = !previous;
+      try {
+        localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(next));
+      } catch {
+        // Not being able to remember the choice is not worth breaking the click.
+      }
+      return next;
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(191,219,254,0.45),_transparent_35%),linear-gradient(180deg,#f8fbff_0%,#f4f7fb_100%)] text-slate-800 flex overflow-hidden print:block print:overflow-visible print:min-h-0 print:bg-none">
+    // h-screen rather than min-h-screen: the shell has to be exactly the
+    // viewport so that <main> is the only thing that scrolls. With min-h-screen
+    // a long page grew the shell itself, so the whole document scrolled and
+    // carried the sidebar and header off the top with it.
+    <div className="h-screen bg-[radial-gradient(circle_at_top,_rgba(191,219,254,0.45),_transparent_35%),linear-gradient(180deg,#f8fbff_0%,#f4f7fb_100%)] text-slate-800 flex overflow-hidden print:block print:h-auto print:overflow-visible print:min-h-0 print:bg-none">
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 z-40 bg-slate-900/30 backdrop-blur-[2px] md:hidden"
@@ -23,13 +53,19 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         />
       )}
 
-      <div className={`fixed inset-y-0 left-0 z-50 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} print:hidden`}>
-        <Sidebar onClose={() => setIsMobileMenuOpen(false)} />
+      <div className={`fixed inset-y-0 left-0 z-50 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:shrink-0 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} print:hidden`}>
+        <Sidebar
+          onClose={() => setIsMobileMenuOpen(false)}
+          collapsed={isSidebarCollapsed}
+          onToggleCollapse={toggleSidebar}
+        />
       </div>
 
-      <div className="flex-1 flex flex-col min-h-screen print:block print:min-h-0 min-w-0">
+      {/* min-h-0 lets this flex child shrink below its content height, which is
+          what allows the <main> inside it to scroll instead of the page. */}
+      <div className="flex-1 flex flex-col min-w-0 min-h-0 print:block print:min-h-0">
         <Header onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 overflow-y-auto print:overflow-visible print:block px-3 pb-8 pt-4 sm:px-6">{children}</main>
+        <main className="flex-1 min-h-0 overflow-y-auto print:overflow-visible print:block px-3 pb-8 pt-4 sm:px-6">{children}</main>
       </div>
     </div>
   );
