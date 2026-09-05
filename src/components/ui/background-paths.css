@@ -1,10 +1,12 @@
 /* Each path carries pathLength="1", so its dash lengths are expressed as a
    fraction of the curve rather than in user units. That makes one rule work for
-   every curve regardless of how long it actually is: a segment covering 30% of
-   the path travels the whole way and wraps. */
+   every curve regardless of how long it actually is: one lit segment travels
+   the whole way and wraps, however long that particular curve happens to be. */
 .bgp-path {
-  stroke-dasharray: 0.3 0.7;
-  animation: bgp-flow linear infinite, bgp-breathe ease-in-out infinite;
+  /* A shorter lit segment reads as a distinct streak travelling the curve,
+     rather than as most of the curve being drawn at once. */
+  stroke-dasharray: 0.22 0.78;
+  animation: bgp-flow linear infinite;
 }
 
 @keyframes bgp-flow {
@@ -13,16 +15,6 @@
   }
   to {
     stroke-dashoffset: -1;
-  }
-}
-
-@keyframes bgp-breathe {
-  0%,
-  100% {
-    opacity: 0.35;
-  }
-  50% {
-    opacity: 0.75;
   }
 }
 

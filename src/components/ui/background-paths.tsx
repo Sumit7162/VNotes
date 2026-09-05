@@ -22,11 +22,14 @@ function FloatingPaths({ direction }: { direction: number }) {
         `M${-380 - shift} ${-189 + drop}` +
         `C${-380 - shift} ${-189 + drop} ${-312 - shift} ${216 - drop} ${152 - shift} ${343 - drop}` +
         `C${616 - shift} ${470 - drop} ${684 - shift} ${875 - drop} ${684 - shift} ${875 - drop}`,
-      width: 0.5 + i * 0.03,
-      opacity: 0.1 + i * 0.02,
-      // Spread the cycle lengths so the fan never pulses in unison.
-      duration: 18 + (i % 7) * 3,
-      delay: -(i % 11) * 2,
+      width: 0.5 + i * 0.035,
+      opacity: 0.14 + i * 0.024,
+      // Measured off the reference recording: a streak covers a visible part of
+      // its curve in well under a second, which puts a full cycle near 12s, not
+      // the 20s+ that made the fan look static.
+      duration: 11 + (i % 7) * 1.6,
+      // Coprime-ish offsets so the fan never lines up and pulses in unison.
+      delay: -(i % 13) * 1.7,
     };
   });
 
@@ -49,8 +52,8 @@ function FloatingPaths({ direction }: { direction: number }) {
           // Normalises the dash units in background-paths.css to 0..1.
           pathLength={1}
           style={{
-            animationDuration: `${path.duration}s, ${path.duration / 2}s`,
-            animationDelay: `${path.delay}s, ${path.delay}s`,
+            animationDuration: `${path.duration}s`,
+            animationDelay: `${path.delay}s`,
           }}
         />
       ))}
