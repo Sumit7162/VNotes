@@ -21,7 +21,7 @@ export function ProfilePage() {
     <div className="p-6 max-w-2xl mx-auto">
       <div className="mb-6">
         <Link
-          to="/"
+          to="/dashboard"
           className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-4"
         >
           <ArrowLeft className="h-4 w-4" />

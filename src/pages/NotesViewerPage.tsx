@@ -58,7 +58,7 @@ export function NotesViewerPage() {
     return (
       <div className="p-6 max-w-3xl mx-auto">
         <Link
-          to="/"
+          to="/dashboard"
           className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -91,7 +91,7 @@ export function NotesViewerPage() {
     return (
       <div className="p-6 max-w-3xl mx-auto">
         <Link
-          to="/"
+          to="/dashboard"
           className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -112,7 +112,7 @@ export function NotesViewerPage() {
     <div className="p-6 max-w-4xl mx-auto print:p-0">
       <div className="mb-6 print:mb-4">
         <Link
-          to="/"
+          to="/dashboard"
           className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-4 print:hidden"
         >
           <ArrowLeft className="h-4 w-4" />

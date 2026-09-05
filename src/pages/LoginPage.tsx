@@ -28,7 +28,7 @@ export function LoginPage() {
       // Dispatch storage event to notify useAuth
       window.dispatchEvent(new Event("storage"));
 
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       console.error("Login failed", err);
       if (axios.isAxiosError(err)) {

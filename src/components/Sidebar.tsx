@@ -11,7 +11,7 @@ import {
 import { useAuth } from "../hooks/useAuth";
 
 const navItems = [
-  { to: "/", icon: <LayoutDashboard className="h-5 w-5" />, label: "Dashboard" },
+  { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5" />, label: "Dashboard" },
   { to: "/submit", icon: <Upload className="h-5 w-5" />, label: "Submit Video" },
   { to: "/notes", icon: <FileText className="h-5 w-5" />, label: "My Notes" },
   { to: "/profile", icon: <User className="h-5 w-5" />, label: "Profile" },
