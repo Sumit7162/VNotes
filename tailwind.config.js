@@ -94,6 +94,18 @@ export default {
           DEFAULT: "#DEE5EE",
           strong: "#C9D3E0",
         },
+        // shadcn token names, backed by the CSS variables in index.css so
+        // pasted components work and follow the .dark class with everything
+        // else. `accent` is intentionally not among them - see index.css.
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        muted: { DEFAULT: "var(--muted)", foreground: "var(--muted-foreground)" },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        primary: { DEFAULT: "var(--primary)", foreground: "var(--primary-foreground)" },
+        secondary: { DEFAULT: "var(--secondary)", foreground: "var(--secondary-foreground)" },
+        destructive: { DEFAULT: "var(--destructive)", foreground: "var(--destructive-foreground)" },
         success: {
           50: "#ECF7F0",
           100: "#D3EDDD",

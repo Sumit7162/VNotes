@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, Link2, Captions, NotebookPen } from "lucide-react";
 import KineticMatrix from "@/components/ui/kinetic-matrix";
 import { useAuth } from "../hooks/useAuth";
+import { useDarkSurface } from "../hooks/useDarkSurface";
 
 const steps = [
   {
@@ -25,25 +25,8 @@ const steps = [
 export function HomePage() {
   const { isSignedIn } = useAuth();
 
-  // The landing page is dark whatever the visitor's OS is set to, so the page
-  // and the canvas agree. Scoped to this route: the class is removed on unmount
-  // so the signed-in app keeps its light theme.
-  useEffect(() => {
-    const root = document.documentElement;
-    const hadDark = root.classList.contains("dark");
-    root.classList.add("dark");
-
-    // Mobile browsers tint their own chrome from this, so without it the
-    // address bar stays pale above a near-black page.
-    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-    const previousThemeColor = meta?.content;
-    if (meta) meta.content = "#06070a";
-
-    return () => {
-      if (!hadDark) root.classList.remove("dark");
-      if (meta && previousThemeColor !== undefined) meta.content = previousThemeColor;
-    };
-  }, []);
+  // The public surface is dark; the signed-in app stays light.
+  useDarkSurface();
 
   return (
     <div className="bg-night-900 text-ink-300">

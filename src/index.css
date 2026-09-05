@@ -17,6 +17,39 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* shadcn theme tokens, mapped onto the palette above.
+   Components pasted from the shadcn ecosystem are written against these names,
+   so they are declared here as variables rather than hard-coded in the config.
+   Deliberately absent: --accent. This project already uses `accent` for the
+   brand blue scale, and redefining it would repaint every button in the app. */
+:root {
+  --background: #FFFFFF;
+  --foreground: #131A24;
+  --muted: #EDF1F7;
+  --muted-foreground: #667588;
+  --border: #DEE5EE;
+  --input: #DEE5EE;
+  --ring: #2A5FD9;
+  --primary: #2A5FD9;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EDF1F7;
+  --secondary-foreground: #202936;
+  --destructive: #C0362F;
+  --destructive-foreground: #FFFFFF;
+}
+
+html.dark {
+  --background: #06070a;
+  --foreground: #F7F9FC;
+  --muted: #141821;
+  --muted-foreground: #97A3B4;
+  --border: #232A36;
+  --input: #232A36;
+  --ring: #6C93F0;
+  --secondary: #141821;
+  --secondary-foreground: #F7F9FC;
+}
+
 html {
   scroll-behavior: smooth;
 }
