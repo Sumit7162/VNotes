@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Warm paper, not cold blue-grey: a note-taking app should read like a page.
+   Fraunces carries the headings, Inter does the reading. Both are fetched in
+   index.html - the stylesheet used to name Inter while nothing loaded it. */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6;
   font-weight: 400;
-  color: #0f172a;
-  background: #f8fbff;
+  color: #1C1917;
+  background: #FAF7F2;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,71 +24,88 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8fbff 0%, #f3f7fb 100%);
-  color: #0f172a;
+  background: #FAF7F2;
+  color: #1C1917;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* Custom scrollbar */
+/* Warm, unobtrusive scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.7);
+  background: #D8CFC1;
+  border: 3px solid #FAF7F2;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.9);
+  background: #A8A29E;
 }
 
-/* Markdown content styling */
-.markdown-content { @apply text-slate-800; }
-.markdown-content h1 { @apply text-2xl font-bold mb-4 mt-6 text-slate-900; }
-.markdown-content h2 { @apply text-xl font-semibold mb-3 mt-5 text-slate-900; }
-.markdown-content h3 { @apply text-lg font-medium mb-2 mt-4 text-slate-900; }
-.markdown-content p { @apply mb-3 leading-relaxed text-slate-700; }
-.markdown-content ul { @apply list-disc pl-6 mb-3 text-slate-700; }
-.markdown-content ol { @apply list-decimal pl-6 mb-3 text-slate-700; }
-.markdown-content li { @apply mb-1 text-slate-700; }
-.markdown-content strong { @apply font-semibold text-slate-900; }
-.markdown-content code { @apply bg-slate-100 px-1.5 py-0.5 rounded-md text-sm font-mono text-slate-800; }
-.markdown-content pre { @apply bg-slate-100 p-4 rounded-xl mb-3 overflow-x-auto text-slate-800 shadow-sm; }
-.markdown-content blockquote { @apply border-l-4 border-sky-300 pl-4 italic text-slate-600 mb-3; }
-.markdown-content h4 { @apply text-base font-semibold mb-2 mt-4 text-slate-900; }
+/* Visible focus for keyboard users, in the accent rather than the browser blue */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid #B4442A;
+  outline-offset: 2px;
+}
+
+/* ---- Notes typography -------------------------------------------------
+   These notes are the product, so they get a real reading measure, serif
+   headings, and looser leading than a dashboard would use. */
+.markdown-content {
+  @apply text-ink-800;
+  line-height: 1.75;
+}
+.markdown-content h1 { @apply font-display text-3xl font-semibold mb-4 mt-8 text-ink-900 tracking-tight; }
+.markdown-content h2 { @apply font-display text-2xl font-semibold mb-3 mt-7 text-ink-900 tracking-tight; }
+.markdown-content h3 { @apply font-display text-xl font-medium mb-2 mt-6 text-ink-900; }
+.markdown-content h4 { @apply font-display text-lg font-medium mb-2 mt-5 text-ink-900; }
 .markdown-content h5,
-.markdown-content h6 { @apply text-sm font-semibold mb-2 mt-3 text-slate-900; }
+.markdown-content h6 { @apply text-sm font-semibold uppercase tracking-wide mb-2 mt-4 text-ink-500; }
+.markdown-content h1:first-child,
+.markdown-content h2:first-child { @apply mt-0; }
+.markdown-content p { @apply mb-4 text-ink-700; }
+.markdown-content ul { @apply list-disc pl-6 mb-4 text-ink-700; }
+.markdown-content ol { @apply list-decimal pl-6 mb-4 text-ink-700; }
+.markdown-content li { @apply mb-1.5 text-ink-700; }
+.markdown-content li::marker { color: #A8A29E; }
+.markdown-content strong { @apply font-semibold text-ink-900; }
+.markdown-content em { @apply italic; }
+.markdown-content code { @apply bg-paper-200 px-1.5 py-0.5 rounded text-[0.85em] font-mono text-accent-800; }
+.markdown-content pre { @apply bg-paper-200 border border-line p-4 rounded-lg mb-4 overflow-x-auto text-ink-800; }
+.markdown-content pre code { @apply bg-transparent p-0 text-ink-800; }
+.markdown-content blockquote { @apply border-l-2 border-accent pl-4 italic text-ink-600 mb-4; }
 .markdown-content ul ul,
 .markdown-content ul ol,
 .markdown-content ol ul,
-.markdown-content ol ol { @apply mt-1 mb-1; }
-.markdown-content a { @apply text-sky-700 underline underline-offset-2 hover:text-sky-900; }
-.markdown-content img { @apply max-w-full h-auto rounded-lg my-3; }
-.markdown-content hr { @apply border-0 border-t border-slate-200 my-6; }
+.markdown-content ol ol { @apply mt-1.5 mb-1.5; }
+.markdown-content a { @apply text-accent-700 underline underline-offset-2 decoration-accent-200 hover:decoration-accent-700; }
+.markdown-content img { @apply max-w-full h-auto rounded-lg my-4; }
+.markdown-content hr { @apply border-0 border-t border-line my-8; }
 
 /* GFM tables */
-.markdown-table-wrap { @apply w-full overflow-x-auto mb-4 rounded-lg border border-slate-200; }
+.markdown-table-wrap { @apply w-full overflow-x-auto mb-4 rounded-lg border border-line; }
 .markdown-content table { @apply w-full border-collapse text-sm text-left; }
-.markdown-content thead { @apply bg-slate-50; }
+.markdown-content thead { @apply bg-paper-200; }
 .markdown-content th {
-  @apply px-3 py-2 font-semibold text-slate-900 align-top border-b border-slate-200;
+  @apply px-3 py-2 font-semibold text-ink-900 align-top border-b border-line;
 }
 .markdown-content td {
-  @apply px-3 py-2 text-slate-700 align-top border-b border-slate-100;
+  @apply px-3 py-2 text-ink-700 align-top border-b border-line;
 }
 .markdown-content tbody tr:last-child td { @apply border-b-0; }
-.markdown-content tbody tr:nth-child(even) { @apply bg-slate-50/60; }
+.markdown-content tbody tr:nth-child(even) { @apply bg-paper-100/70; }
 .markdown-content th > p,
 .markdown-content td > p { @apply mb-0; }
 
 /* Task lists */
-.markdown-content li input[type="checkbox"] { @apply mr-2 align-middle; }
+.markdown-content li input[type="checkbox"] { @apply mr-2 align-middle accent-accent; }
 .markdown-content li.task-list-item { @apply list-none -ml-6; }
 
 /* Long formulas scroll rather than overflow the card */

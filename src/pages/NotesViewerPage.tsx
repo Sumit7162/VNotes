@@ -59,21 +59,21 @@ export function NotesViewerPage() {
       <div className="p-6 max-w-3xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-6"
+          className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Dashboard
         </Link>
-        <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+        <div className="bg-paper-50 rounded-xl border border-line p-8 text-center">
           {isFailed ? (
-            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <AlertCircle className="h-12 w-12 text-danger-600 mx-auto mb-4" />
           ) : (
-            <Loader2 className="h-12 w-12 text-primary-500 mx-auto mb-4 animate-spin" />
+            <Loader2 className="h-12 w-12 text-accent mx-auto mb-4 animate-spin" />
           )}
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-lg font-medium text-ink-900 mb-2">
             {isFailed ? "Processing failed" : statusLabels[video.status]}
           </h3>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-ink-500">
             {isFailed
               ? video.error_message || "The video could not be processed."
               : "Notes will load automatically here as soon as the video finishes processing."}
@@ -92,15 +92,15 @@ export function NotesViewerPage() {
       <div className="p-6 max-w-3xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-6"
+          className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Dashboard
         </Link>
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-          <FileText className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No notes found</h3>
-          <p className="text-sm text-gray-500">
+        <div className="bg-paper-50 rounded-xl border border-line p-12 text-center">
+          <FileText className="h-12 w-12 text-ink-300 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-ink-900 mb-2">No notes found</h3>
+          <p className="text-sm text-ink-500">
             Notes for this video are not available yet, or the video ID is invalid.
           </p>
         </div>
@@ -113,19 +113,19 @@ export function NotesViewerPage() {
       <div className="mb-6 print:mb-4">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-4 print:hidden"
+          className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-4 print:hidden"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Dashboard
         </Link>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 print:border-0 print:p-0">
+        <div className="bg-paper-50 rounded-xl border border-line p-6 print:border-0 print:p-0">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="font-display text-xl font-semibold text-ink-900">
                 {video?.title || "Video Notes"}
               </h2>
-              <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+              <div className="flex items-center gap-4 mt-2 text-sm text-ink-500">
                 <span className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
                   {formatDateTime(note.created_at)}
@@ -135,14 +135,14 @@ export function NotesViewerPage() {
             <div className="flex flex-wrap items-center gap-4 print:hidden">
               <button
                 onClick={handlePrintPdf}
-                className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 font-medium"
+                className="inline-flex items-center gap-1 text-sm text-ink-600 hover:text-ink-900 font-medium"
               >
                 <Printer className="h-4 w-4" />
                 Export PDF
               </button>
               <button
                 onClick={handleDownload}
-                className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 font-medium"
+                className="inline-flex items-center gap-1 text-sm text-ink-600 hover:text-ink-900 font-medium"
               >
                 <Download className="h-4 w-4" />
                 Download MD
@@ -151,7 +151,7 @@ export function NotesViewerPage() {
                 href={video?.youtube_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-primary-600 hover:text-primary-800 font-medium"
+                className="text-sm text-accent-600 hover:text-accent-800 font-medium"
               >
                 Watch Video
               </a>
@@ -160,11 +160,11 @@ export function NotesViewerPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-8 print:border-0 print:p-0">
+      <div className="bg-paper-50 rounded-xl border border-line p-8 print:border-0 print:p-0">
         <NotesMarkdown content={note.markdown_content} />
 
         {/* Footer - the last thing on screen and on the last printed page. */}
-        <footer className="notes-footer mt-8 pt-4 border-t border-gray-200 text-xs text-gray-500 flex flex-wrap justify-between gap-2">
+        <footer className="notes-footer mt-8 pt-4 border-t border-line text-xs text-ink-500 flex flex-wrap justify-between gap-2">
           <span>{video?.title || "Video Notes"}</span>
           <span>Generated {formatDateTime(note.created_at)}</span>
         </footer>

@@ -75,14 +75,14 @@ export function DashboardPage() {
     <div className="space-y-6 max-w-6xl mx-auto">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Welcome back, {displayName}</h2>
-          <p className="text-sm text-slate-500 mt-1.5">
+          <h2 className="font-display text-3xl font-semibold tracking-tight text-ink-900">Welcome back, {displayName}</h2>
+          <p className="text-sm text-ink-500 mt-1.5">
             Overview of your video processing activity
           </p>
         </div>
         <Link
           to="/submit"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white px-4 py-2.5 rounded-xl text-sm font-medium shadow-lg shadow-sky-200 transition-all duration-200"
+          className="inline-flex items-center gap-2 bg-accent hover:bg-accent-700 text-paper-50 px-4 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-colors duration-150"
         >
           Process New Video
           <ArrowRight className="h-4 w-4" />
@@ -95,16 +95,16 @@ export function DashboardPage() {
       />
 
       {activeVideo && (
-        <div className="rounded-2xl border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-indigo-50 p-4 shadow-sm">
+        <div className="rounded-2xl border border-accent-100 bg-accent-50 p-4 shadow-sm">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-700">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-700">
                 Current processing
               </p>
-              <h3 className="mt-1 truncate text-sm font-semibold text-slate-900">
+              <h3 className="mt-1 truncate text-sm font-semibold text-ink-900">
                 {activeVideo.title || "Processing video"}
               </h3>
-              <p className="mt-1 text-xs text-slate-600">
+              <p className="mt-1 text-xs text-ink-600">
                 {activeStatusLabels[activeVideo.status]}
               </p>
             </div>
@@ -119,19 +119,19 @@ export function DashboardPage() {
                     className="flex min-w-0 items-center gap-1.5 text-xs font-medium"
                   >
                     {isCurrent ? (
-                      <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-sky-600" />
+                      <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-accent-600" />
                     ) : isDone ? (
-                      <CheckCircle className="h-3.5 w-3.5 flex-shrink-0 text-emerald-500" />
+                      <CheckCircle className="h-3.5 w-3.5 flex-shrink-0 text-success-600" />
                     ) : (
-                      <Circle className="h-3.5 w-3.5 flex-shrink-0 text-slate-300" />
+                      <Circle className="h-3.5 w-3.5 flex-shrink-0 text-ink-300" />
                     )}
                     <span
                       className={
                         isCurrent
-                          ? "truncate text-sky-700"
+                          ? "truncate text-accent-700"
                           : isDone
-                            ? "truncate text-slate-700"
-                            : "truncate text-slate-400"
+                            ? "truncate text-ink-700"
+                            : "truncate text-ink-400"
                       }
                     >
                       {step.label}
@@ -145,14 +145,14 @@ export function DashboardPage() {
       )}
 
       {(videosError || usageError) && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+        <div className="rounded-lg border border-danger-200 bg-danger-50 p-4">
           <div className="flex items-start gap-2">
-            <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-500" />
+            <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-danger-600" />
             <div>
-              <p className="text-sm font-medium text-red-800">
+              <p className="text-sm font-medium text-danger-800">
                 Dashboard data could not be loaded
               </p>
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-danger-600">
                 {videosErrorDetail instanceof Error
                   ? videosErrorDetail.message
                   : usageErrorDetail instanceof Error
@@ -167,19 +167,19 @@ export function DashboardPage() {
       <div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Recent Videos</h3>
+            <h3 className="text-lg font-semibold text-ink-900">Recent Videos</h3>
             {hasActiveVideo && (
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-ink-500">
                 Processing progress updates automatically while this page stays open.
               </p>
             )}
           </div>
           <div className="flex items-center gap-3">
             {videosFetching && hasActiveVideo && (
-              <span className="text-xs font-medium text-primary-600">Updating status...</span>
+              <span className="text-xs font-medium text-accent-600">Updating status...</span>
             )}
             {videosData && videosData.total > 10 && (
-              <Link to="/notes" className="text-sm text-primary-600 hover:text-primary-800">
+              <Link to="/notes" className="text-sm text-accent-600 hover:text-accent-800">
                 View All ({videosData.total})
               </Link>
             )}
@@ -187,17 +187,17 @@ export function DashboardPage() {
         </div>
 
         {!videosData || videosData.videos.length === 0 ? (
-          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-            <FileText className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <h4 className="text-lg font-medium text-gray-900 mb-2">
+          <div className="bg-paper-50 rounded-xl border border-line p-12 text-center">
+            <FileText className="h-12 w-12 text-ink-300 mx-auto mb-4" />
+            <h4 className="text-lg font-medium text-ink-900 mb-2">
               No videos yet
             </h4>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-ink-500 mb-4">
               Submit a YouTube video to get started with AI-powered note-taking.
             </p>
             <Link
               to="/submit"
-              className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors"
             >
               Submit Your First Video
             </Link>

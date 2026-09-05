@@ -22,18 +22,18 @@ export function ProfilePage() {
       <div className="mb-6">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-4"
+          className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-700 mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Dashboard
         </Link>
-        <h2 className="text-2xl font-bold text-gray-900">Profile</h2>
-        <p className="text-sm text-gray-500 mt-1">Your account information</p>
+        <h2 className="font-display text-2xl font-semibold text-ink-900 tracking-tight">Profile</h2>
+        <p className="text-sm text-ink-500 mt-1">Your account information</p>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+      <div className="bg-paper-50 rounded-xl border border-line p-6 space-y-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center overflow-hidden">
+          <div className="w-16 h-16 bg-accent-50 rounded-full flex items-center justify-center overflow-hidden">
             {avatarUrl ? (
               <img
                 src={avatarUrl}
@@ -41,31 +41,31 @@ export function ProfilePage() {
                 className="w-16 h-16 rounded-full object-cover"
               />
             ) : (
-              <User className="h-8 w-8 text-primary-500" />
+              <User className="h-8 w-8 text-accent" />
             )}
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-ink-900">
               {displayName}
             </h3>
-            <p className="text-sm text-gray-500">{displayEmail}</p>
+            <p className="text-sm text-ink-500">{displayEmail}</p>
           </div>
         </div>
 
-        <div className="border-t border-gray-200 pt-6 space-y-4">
+        <div className="border-t border-line pt-6 space-y-4">
           <div className="flex items-center gap-3">
-            <Mail className="h-5 w-5 text-gray-400" />
+            <Mail className="h-5 w-5 text-ink-400" />
             <div>
-              <p className="text-xs text-gray-500">Email</p>
-              <p className="text-sm font-medium text-gray-900">{displayEmail}</p>
+              <p className="text-xs text-ink-500">Email</p>
+              <p className="text-sm font-medium text-ink-900">{displayEmail}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <Calendar className="h-5 w-5 text-gray-400" />
+            <Calendar className="h-5 w-5 text-ink-400" />
             <div>
-              <p className="text-xs text-gray-500">Member Since</p>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-xs text-ink-500">Member Since</p>
+              <p className="text-sm font-medium text-ink-900">
                 {dbUser?.created_at
                   ? new Date(dbUser.created_at).toLocaleDateString("en-US", {
                       month: "long",
@@ -78,10 +78,10 @@ export function ProfilePage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <CreditCard className="h-5 w-5 text-gray-400" />
+            <CreditCard className="h-5 w-5 text-ink-400" />
             <div>
-              <p className="text-xs text-gray-500">Current Plan</p>
-              <p className="text-sm font-medium text-gray-900 capitalize">
+              <p className="text-xs text-ink-500">Current Plan</p>
+              <p className="text-sm font-medium text-ink-900 capitalize">
                 {dbUser?.plan || "Free"}
               </p>
             </div>
@@ -89,38 +89,38 @@ export function ProfilePage() {
         </div>
       </div>
 
-      <div className="mt-6 bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Usage Statistics</h3>
+      <div className="mt-6 bg-paper-50 rounded-xl border border-line p-6">
+        <h3 className="text-lg font-semibold text-ink-900 mb-4">Usage Statistics</h3>
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <p className="text-xs text-gray-500 mb-1">Total Videos Processed</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-xs text-ink-500 mb-1">Total Videos Processed</p>
+            <p className="text-2xl font-semibold text-ink-900 tabular-nums">
               {usageData?.total_videos ?? 0}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 mb-1">Today's Videos (15-30 min)</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-xs text-ink-500 mb-1">Today's Videos (15-30 min)</p>
+            <p className="text-2xl font-semibold text-ink-900 tabular-nums">
               {usageData?.today?.videos_processed ?? 0} / {usageData?.today?.daily_limit ?? 2}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 mb-1">Minutes Used Today</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-xs text-ink-500 mb-1">Minutes Used Today</p>
+            <p className="text-2xl font-semibold text-ink-900 tabular-nums">
               {usageData?.today?.minutes_processed ?? 0}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 mb-1">Remaining Today (15-30 min)</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-xs text-ink-500 mb-1">Remaining Today (15-30 min)</p>
+            <p className="text-2xl font-semibold text-ink-900 tabular-nums">
               {usageData?.today?.remaining_videos ?? 0} videos
             </p>
           </div>
         </div>
-        <div className="mt-4 flex items-center gap-2 pt-4 border-t border-gray-100">
-          <Infinity className="h-4 w-4 text-emerald-500" />
-          <p className="text-xs text-gray-500">
-            Videos under 15 minutes are <span className="font-semibold text-emerald-600">unlimited</span>
+        <div className="mt-4 flex items-center gap-2 pt-4 border-t border-line">
+          <Infinity className="h-4 w-4 text-success-600" />
+          <p className="text-xs text-ink-500">
+            Videos under 15 minutes are <span className="font-semibold text-success-600">unlimited</span>
           </p>
         </div>
       </div>

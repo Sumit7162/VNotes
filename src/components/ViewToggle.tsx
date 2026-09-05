@@ -18,20 +18,20 @@ export function ViewToggle({ value, onChange }: ViewToggleProps) {
     <div
       role="group"
       aria-label="Notes layout"
-      className="inline-flex items-stretch overflow-hidden rounded-full border border-slate-200 bg-white shadow-sm"
+      className="inline-flex items-stretch overflow-hidden rounded-full border border-line bg-paper-50 shadow-sm"
     >
       {options.map(({ view, label, icon: Icon }, index) => {
         const active = value === view;
         return (
           <div key={view} className="flex items-stretch">
-            {index > 0 && <span aria-hidden className="w-px bg-slate-200" />}
+            {index > 0 && <span aria-hidden className="w-px bg-line" />}
             <button
               type="button"
               onClick={() => onChange(view)}
               aria-pressed={active}
               title={label}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 text-slate-600 transition-colors duration-150 ${
-                active ? "bg-sky-100 text-sky-700" : "hover:bg-slate-50"
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 text-ink-600 transition-colors duration-150 ${
+                active ? "bg-accent-100 text-accent-700" : "hover:bg-paper-100"
               }`}
             >
               {active && <Check className="h-3.5 w-3.5" />}

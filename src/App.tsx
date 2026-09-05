@@ -45,10 +45,10 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     // viewport so that <main> is the only thing that scrolls. With min-h-screen
     // a long page grew the shell itself, so the whole document scrolled and
     // carried the sidebar and header off the top with it.
-    <div className="h-screen bg-[radial-gradient(circle_at_top,_rgba(191,219,254,0.45),_transparent_35%),linear-gradient(180deg,#f8fbff_0%,#f4f7fb_100%)] text-slate-800 flex overflow-hidden print:block print:h-auto print:overflow-visible print:min-h-0 print:bg-none">
+    <div className="h-screen bg-paper-100 text-ink-800 flex overflow-hidden print:block print:h-auto print:overflow-visible print:min-h-0 print:bg-none">
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-900/30 backdrop-blur-[2px] md:hidden"
+          className="fixed inset-0 z-40 bg-ink-900/25 md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

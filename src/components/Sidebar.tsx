@@ -36,18 +36,18 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
 
   return (
     <aside
-      className={`w-64 ${asideWidth} h-full bg-white/90 border-r border-slate-200/80 shadow-[8px_0_30px_rgba(15,23,42,0.04)] backdrop-blur-xl flex flex-col transition-[width] duration-200 ease-in-out print:hidden`}
+      className={`w-64 ${asideWidth} h-full bg-paper-50 border-r border-line shadow-none flex flex-col transition-[width] duration-200 ease-in-out print:hidden`}
     >
       <div
-        className={`flex items-center gap-2 border-b border-slate-200/80 p-4 ${
+        className={`flex items-center gap-2 border-b border-line p-4 ${
           collapsed ? "md:flex-col md:gap-3" : "justify-between"
         }`}
       >
         <Link to="/" onClick={onClose} className="flex items-center gap-2.5 min-w-0">
-          <div className="w-9 h-9 shrink-0 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-xl shadow-sm flex items-center justify-center">
+          <div className="w-9 h-9 shrink-0 bg-accent rounded-xl shadow-sm flex items-center justify-center">
             <FileText className="h-5 w-5 text-white" />
           </div>
-          <span className={`text-lg font-bold text-slate-900 truncate ${hideWhenCollapsed}`}>
+          <span className={`font-display text-xl font-semibold text-ink-900 tracking-tight truncate ${hideWhenCollapsed}`}>
             VideoNotes
           </span>
         </Link>
@@ -59,7 +59,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             aria-expanded={!collapsed}
-            className="hidden md:flex shrink-0 p-2 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+            className="hidden md:flex shrink-0 p-2 rounded-xl text-ink-500 hover:bg-paper-200 hover:text-ink-900 transition-colors"
           >
             {collapsed ? (
               <PanelLeftOpen className="h-5 w-5" />
@@ -84,8 +84,8 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
               aria-label={collapsed ? item.label : undefined}
               className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${centerWhenCollapsed} ${
                 isActive
-                  ? "bg-gradient-to-r from-sky-50 to-indigo-50 text-sky-700 shadow-sm ring-1 ring-sky-100"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                  ? "bg-accent-50 text-accent-700 ring-1 ring-accent-100"
+                  : "text-ink-600 hover:bg-paper-100 hover:text-ink-900"
               }`}
             >
               <span className="shrink-0">{item.icon}</span>
@@ -95,12 +95,12 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-200/80">
+      <div className="p-4 border-t border-line">
         <button
           onClick={() => logout()}
           title={collapsed ? "Sign Out" : undefined}
           aria-label={collapsed ? "Sign Out" : undefined}
-          className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors w-full ${centerWhenCollapsed}`}
+          className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-ink-600 hover:bg-paper-100 hover:text-ink-900 transition-colors w-full ${centerWhenCollapsed}`}
         >
           <LogOut className="h-5 w-5 shrink-0" />
           <span className={`truncate ${hideWhenCollapsed}`}>Sign Out</span>

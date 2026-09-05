@@ -86,7 +86,7 @@ export function NotePagePreview({ content }: NotePagePreviewProps) {
     <div
       ref={ref}
       aria-hidden
-      className="relative overflow-hidden bg-white select-none pointer-events-none"
+      className="relative overflow-hidden bg-paper-50 select-none pointer-events-none"
       style={{ aspectRatio: "4 / 3" }}
     >
       {visible && (
