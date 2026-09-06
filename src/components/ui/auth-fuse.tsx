@@ -226,6 +226,12 @@ export interface AuthUIProps {
    * the whole panel.
    */
   asideSlot?: React.ReactNode;
+  /**
+   * Fills the ground behind the sign-in form. Like asideSlot this is a backdrop
+   * rather than a replacement: the brand, card and footer all render on top of
+   * it, so whatever goes here has to stay quiet enough to read a form over.
+   */
+  formBackgroundSlot?: React.ReactNode;
 }
 
 const defaultSignInContent = {
@@ -303,6 +309,7 @@ export function AuthUI({
   brand,
   footer,
   asideSlot,
+  formBackgroundSlot,
   formPanelClassName,
   formCardClassName,
 }: AuthUIProps) {
@@ -330,11 +337,19 @@ export function AuthUI({
       `}</style>
       <div
         className={cn(
-          "flex min-h-screen items-center justify-center p-6 md:min-h-0",
+          "relative flex min-h-screen items-center justify-center p-6 md:min-h-0",
           formPanelClassName
         )}
       >
-        <div className={cn("mx-auto grid w-[350px] gap-5", formCardClassName)}>
+        {formBackgroundSlot ? (
+          <div
+            className="pointer-events-none absolute inset-0 overflow-hidden"
+            aria-hidden="true"
+          >
+            {formBackgroundSlot}
+          </div>
+        ) : null}
+        <div className={cn("relative z-10 mx-auto grid w-[350px] gap-5", formCardClassName)}>
           {brand}
 
           <div className="flex flex-col items-center gap-2 text-center">

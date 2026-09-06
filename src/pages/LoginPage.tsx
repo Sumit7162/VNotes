@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { AuthUI } from "@/components/ui/auth-fuse";
 import { MatrixRain } from "@/components/ui/matrix-rain";
+import RecursiveErosionBackground from "@/components/ui/recursive-erosion";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -44,6 +45,10 @@ export function LoginPage() {
   return (
     <AuthUI
       asideSlot={<MatrixRain />}
+      // Light mode, not the effect's dark default: this half carries dark text,
+      // and below `sm` the card drops its own background entirely, so a dark
+      // ground would leave the form unreadable on a phone.
+      formBackgroundSlot={<RecursiveErosionBackground mode="light" />}
       formPanelClassName="login-surface"
       // The Google button is a fixed 320px wide, so the card only gains its
       // padding from sm up, where 420px minus p-8 still clears it. On a phone
