@@ -4,8 +4,12 @@
   width: 100%;
   height: 100%;
   /* #06070a rather than #000 so the panel matches the dark surface it sits in
-     and the gradient that fades over its base has nothing to disagree with. */
-  background: #06070a;
+     and the gradient that fades over its base has nothing to disagree with.
+     The green wash sits above it and is centred rather than dropped to the
+     bottom, where the quote's fade to #06070a would have to fight it. */
+  background:
+    radial-gradient(110% 75% at 50% 42%, rgba(0, 255, 120, 0.09), transparent 72%),
+    #06070a;
   display: flex;
   overflow: hidden;
 }
@@ -34,18 +38,23 @@
   position: absolute;
   top: 0;
   left: 0;
+  /* Terminal phosphor rather than the rainbow this came with. 0deg runs the
+     ramp bottom to top, and the columns fall downward, so 0% is the leading
+     edge: blown out to near-white, dropping through hot green into the deep
+     green tail that trails behind it. */
   background: linear-gradient(
     0deg,
-    rgba(185, 79, 255, 1) 0%,
-    rgba(255, 69, 69, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(252, 237, 69, 1) 60%,
-    rgba(69, 252, 90, 1) 80%,
-    rgba(69, 206, 252, 1) 100%
+    rgba(226, 255, 230, 1) 0%,
+    rgba(128, 255, 158, 1) 8%,
+    rgba(40, 236, 96, 1) 26%,
+    rgba(22, 194, 74, 1) 55%,
+    rgba(12, 132, 48, 1) 80%,
+    rgba(7, 82, 30, 1) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 6px rgba(40, 236, 96, 0.45);
   writing-mode: vertical-lr;
   letter-spacing: 1px;
   text-rendering: optimizeLegibility;
