@@ -26,12 +26,12 @@ export function HomePage() {
   const { isSignedIn } = useAuth();
 
   // The public surface is dark; the signed-in app stays light.
-  useDarkSurface();
+  useDarkSurface("#0A0716");
 
   return (
-    // neutral-950 matches the hero, which paints its own background and is taken
-    // verbatim from upstream, so the sections below meet it with no seam.
-    <div className="bg-neutral-950 text-ink-300">
+    // One ground for the whole page: the hero is transparent and sits on this,
+    // so the glows run behind it and the sections below meet it with no seam.
+    <div className="home-surface text-ink-300">
       {/* BackgroundPaths is min-h-screen and takes no layout props, so the page
           is built around it: the hero owns the first screen outright, and the
           header and scroll cue sit over it rather than taking height from it. */}
@@ -90,7 +90,7 @@ export function HomePage() {
           </Link>
           <a
             href="#how-it-works"
-            className="inline-flex items-center rounded-lg border border-night-line bg-night-800 px-5 py-3 text-sm font-medium text-ink-300 transition-colors hover:border-accent-500 hover:text-paper-50"
+            className="inline-flex items-center rounded-lg border border-night-line home-panel px-5 py-3 text-sm font-medium text-ink-300 transition-colors hover:border-accent-500 hover:text-paper-50"
           >
             How it works
           </a>
@@ -102,9 +102,9 @@ export function HomePage() {
           {steps.map((step) => (
             <div
               key={step.title}
-              className="rounded-2xl border border-night-line bg-night-800 p-5 transition-colors hover:border-accent-600"
+              className="rounded-2xl border border-night-line home-panel p-5 transition-colors hover:border-accent-600"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-night-600 text-cyan-400 ring-1 ring-inset ring-night-line">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl home-tile text-cyan-400 ring-1 ring-inset ring-night-line">
                 {step.icon}
               </div>
               <h3 className="mt-4 font-display text-lg font-semibold text-paper-50">

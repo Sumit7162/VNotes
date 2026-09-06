@@ -114,6 +114,38 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     #E6EEFB;
 }
 
+/* Landing page ground. The page used to be flat neutral-950, which read as a
+   plain black sheet; this lays the three hues on as soft glows over a deep
+   indigo base - brand blue from the top left, violet through the middle, pink
+   low on the right - so the colour moves as you scroll instead of sitting
+   still. Only the ground is coloured: the borders and rules on top of it keep
+   their own neutral tokens.
+
+   Deliberately kept dark. Everything on this page is light type - white
+   headings, ink-300 body - so the ground has to stay well below it in
+   luminance or the contrast goes. The alphas are chosen so that even where
+   three glows overlap the result is still a dark surface. */
+.home-surface {
+  background:
+    radial-gradient(72% 48% at 6% -2%, rgba(42, 95, 217, 0.40), transparent 68%),
+    radial-gradient(58% 42% at 94% 14%, rgba(150, 68, 190, 0.28), transparent 70%),
+    radial-gradient(66% 38% at 46% 46%, rgba(91, 71, 196, 0.34), transparent 72%),
+    radial-gradient(58% 36% at 90% 74%, rgba(206, 82, 152, 0.24), transparent 70%),
+    radial-gradient(72% 42% at 10% 98%, rgba(42, 95, 217, 0.22), transparent 72%),
+    #0A0716;
+}
+
+/* Panels on the landing ground. Translucent rather than a fixed colour, so a
+   card picks up whichever glow it happens to sit over and the grid does not
+   look like three flat chips pasted on a gradient. */
+.home-panel {
+  background: rgba(26, 20, 56, 0.55);
+}
+
+.home-tile {
+  background: rgba(64, 47, 126, 0.55);
+}
+
 /* Visible focus for keyboard users, in the accent rather than the browser blue */
 :where(a, button, input, textarea, select):focus-visible {
   outline: 2px solid #2A5FD9;
