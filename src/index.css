@@ -36,6 +36,26 @@
   --secondary-foreground: #202936;
   --destructive: #C0362F;
   --destructive-foreground: #FFFFFF;
+
+  /* Neutral ramps as RGB channels rather than hex, because tailwind.config.js
+     wraps them in rgb(... / <alpha-value>) so that bg-paper-50/90 and friends
+     keep working. Light theme: paper runs white to grey as the number rises,
+     ink runs faint to near-black. */
+  --paper-50: 255 255 255;
+  --paper-100: 247 249 252;
+  --paper-200: 237 241 247;
+  --paper-300: 226 232 241;
+
+  --ink-300: 199 208 220;
+  --ink-400: 151 163 180;
+  --ink-500: 102 117 136;
+  --ink-600: 74 87 105;
+  --ink-700: 53 64 79;
+  --ink-800: 32 41 54;
+  --ink-900: 19 26 36;
+
+  --line: 222 229 238;
+  --line-strong: 201 211 224;
 }
 
 html.dark {
@@ -48,6 +68,26 @@ html.dark {
   --ring: #6C93F0;
   --secondary: #141821;
   --secondary-foreground: #F7F9FC;
+
+  /* The ramps invert by role, not by number. paper-100 stays the page and
+     paper-50 the card sitting on it, so cards still read as raised - but here
+     that means 50 is lighter than 100 rather than pure white. ink keeps 900 as
+     the strongest text and 300 as the faintest, which near-inverts its hexes. */
+  --paper-50: 18 24 33;
+  --paper-100: 11 15 21;
+  --paper-200: 26 34 46;
+  --paper-300: 35 44 58;
+
+  --ink-300: 78 89 104;
+  --ink-400: 107 120 137;
+  --ink-500: 138 151 168;
+  --ink-600: 169 181 196;
+  --ink-700: 198 208 220;
+  --ink-800: 223 230 238;
+  --ink-900: 244 247 251;
+
+  --line: 34 43 55;
+  --line-strong: 48 59 74;
 }
 
 html {
@@ -146,6 +186,20 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(64, 47, 126, 0.55);
 }
 
+/* Below sm the form card drops its own background, so the panel ground is what
+   the form text sits directly on. In dark mode that text is near-white, which
+   the light blue ground above cannot carry - so it goes dark here. Scoped to
+   the small breakpoint deliberately: from sm up .login-surface-night already
+   owns the ground, and a broader rule would outrank it on specificity. */
+@media (max-width: 639.98px) {
+  html.dark .login-surface {
+    background:
+      radial-gradient(62% 55% at 10% 6%, rgba(42, 95, 217, 0.26), transparent 70%),
+      radial-gradient(52% 48% at 94% 90%, rgba(14, 144, 160, 0.20), transparent 72%),
+      #0A0E16;
+  }
+}
+
 /* Paired with .login-surface, never used alone. From the sm breakpoint up the
    erosion effect supplies the ground, so the panel drops to the effect's own
    near-black and the blue gradient underneath stops mattering. Below sm the
@@ -156,6 +210,21 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   .login-surface-night {
     background: #0a0908;
   }
+}
+
+/* The accent scale is deliberately not theme-swapped - it is the brand blue and
+   it backs solid buttons, where flipping it would wreck the contrast with the
+   white label. That leaves the few places the dark blues are used as *text* on
+   a surface that has now gone dark, so those are lifted here instead. */
+html.dark .markdown-content code {
+  color: #8FADF8;
+}
+html.dark .markdown-content a {
+  color: #8FADF8;
+  text-decoration-color: #2A5FD9;
+}
+html.dark .markdown-content a:hover {
+  text-decoration-color: #8FADF8;
 }
 
 /* Visible focus for keyboard users, in the accent rather than the browser blue */

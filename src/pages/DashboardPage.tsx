@@ -80,7 +80,7 @@ export function DashboardPage() {
         </div>
         <Link
           to="/submit"
-          className="inline-flex items-center gap-2 bg-accent hover:bg-accent-700 text-paper-50 px-4 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-colors duration-150"
+          className="inline-flex items-center gap-2 bg-accent hover:bg-accent-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-colors duration-150"
         >
           Process New Video
           <ArrowRight className="h-4 w-4" />

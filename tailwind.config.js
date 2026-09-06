@@ -15,24 +15,27 @@ export default {
         // background layered a blue radial over a blue linear gradient, which is
         // what made every screen feel washed; flat surfaces let the accent do
         // the work instead.
+        // Surfaces. Driven by CSS variables so the light/dark toggle can swap
+        // them without every `bg-paper-50` in the app needing a dark: variant.
+        // Channels rather than hex, so the /opacity modifier still works.
         paper: {
-          50: "#FFFFFF",
-          100: "#F7F9FC",
-          200: "#EDF1F7",
-          300: "#E2E8F1",
+          50: "rgb(var(--paper-50) / <alpha-value>)",
+          100: "rgb(var(--paper-100) / <alpha-value>)",
+          200: "rgb(var(--paper-200) / <alpha-value>)",
+          300: "rgb(var(--paper-300) / <alpha-value>)",
         },
         // One cool neutral ramp. The app previously mixed Tailwind's slate and
         // gray scales at random, which reads as unconsidered however good the
         // accent is.
         ink: {
-          300: "#C7D0DC",
-          400: "#97A3B4",
-          500: "#667588",
-          600: "#4A5769",
-          700: "#35404F",
-          800: "#202936",
-          900: "#131A24",
-          DEFAULT: "#131A24",
+          300: "rgb(var(--ink-300) / <alpha-value>)",
+          400: "rgb(var(--ink-400) / <alpha-value>)",
+          500: "rgb(var(--ink-500) / <alpha-value>)",
+          600: "rgb(var(--ink-600) / <alpha-value>)",
+          700: "rgb(var(--ink-700) / <alpha-value>)",
+          800: "rgb(var(--ink-800) / <alpha-value>)",
+          900: "rgb(var(--ink-900) / <alpha-value>)",
+          DEFAULT: "rgb(var(--ink-900) / <alpha-value>)",
         },
         // Sampled from the logo, whose stroke runs #3040A0 indigo -> #2080C0
         // blue -> #20D0D0 cyan. Used flat and sparingly: one confident blue,
@@ -91,8 +94,8 @@ export default {
           line: "#232A36",
         },
         line: {
-          DEFAULT: "#DEE5EE",
-          strong: "#C9D3E0",
+          DEFAULT: "rgb(var(--line) / <alpha-value>)",
+          strong: "rgb(var(--line-strong) / <alpha-value>)",
         },
         // shadcn token names, backed by the CSS variables in index.css so
         // pasted components work and follow the .dark class with everything

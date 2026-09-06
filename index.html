@@ -16,6 +16,28 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Runs before the app so the first paint is already the right theme.
+         Without it a dark-theme user gets a white flash on every load, because
+         React only applies the class once it has mounted. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("vnotes:theme");
+          var dark =
+            stored === "dark" ||
+            ((!stored || stored === "system") &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) {
+            document.documentElement.classList.add("dark");
+            document.documentElement.style.colorScheme = "dark";
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.content = "#06070a";
+          }
+        } catch (e) {
+          /* Storage can throw in a private window; light is a fine fallback. */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

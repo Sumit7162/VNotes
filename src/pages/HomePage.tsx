@@ -31,7 +31,7 @@ export function HomePage() {
   return (
     // One ground for the whole page: the hero is transparent and sits on this,
     // so the glows run behind it and the sections below meet it with no seam.
-    <div className="home-surface text-ink-300">
+    <div className="home-surface text-ink-700">
       {/* BackgroundPaths is min-h-screen and takes no layout props, so the page
           is built around it: the hero owns the first screen outright, and the
           header and scroll cue sit over it rather than taking height from it. */}
@@ -72,10 +72,10 @@ export function HomePage() {
       </div>
 
       <section id="pitch" className="mx-auto w-full max-w-3xl px-5 py-20 text-center sm:px-8">
-        <h2 className="font-display text-3xl font-semibold tracking-tight text-paper-50 sm:text-4xl">
+        <h2 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           Turn any video into notes worth keeping
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-400">
+        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-600">
           Paste a YouTube link and get structured study notes back in seconds —
           headings, key points, formulas and tables, ready to read or print.
         </p>
@@ -90,7 +90,7 @@ export function HomePage() {
           </Link>
           <a
             href="#how-it-works"
-            className="inline-flex items-center rounded-lg border border-night-line home-panel px-5 py-3 text-sm font-medium text-ink-300 transition-colors hover:border-accent-500 hover:text-paper-50"
+            className="inline-flex items-center rounded-lg border border-night-line home-panel px-5 py-3 text-sm font-medium text-ink-700 transition-colors hover:border-accent-500 hover:text-white"
           >
             How it works
           </a>
@@ -107,10 +107,10 @@ export function HomePage() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl home-tile text-cyan-400 ring-1 ring-inset ring-night-line">
                 {step.icon}
               </div>
-              <h3 className="mt-4 font-display text-lg font-semibold text-paper-50">
+              <h3 className="mt-4 font-display text-lg font-semibold text-white">
                 {step.title}
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink-400">{step.body}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-600">{step.body}</p>
             </div>
           ))}
         </div>

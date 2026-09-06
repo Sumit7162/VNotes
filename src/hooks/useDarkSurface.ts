@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import { pinDarkSurface, unpinDarkSurface } from "../lib/theme";
+
 /**
  * Pin the document to the dark theme while the calling route is mounted.
  *
@@ -16,6 +18,9 @@ export function useDarkSurface(themeColor = "#06070a") {
     const root = document.documentElement;
     const hadDark = root.classList.contains("dark");
     root.classList.add("dark");
+    // Marks the document for the duration, so an OS preference change while
+    // this route is mounted cannot strip the class back off again.
+    pinDarkSurface();
 
     // Mobile browsers tint their own chrome from this, so without it the
     // address bar stays pale above a near-black page.
@@ -24,6 +29,7 @@ export function useDarkSurface(themeColor = "#06070a") {
     if (meta) meta.content = themeColor;
 
     return () => {
+      unpinDarkSurface();
       if (!hadDark) root.classList.remove("dark");
       if (meta && previousThemeColor !== undefined) meta.content = previousThemeColor;
     };

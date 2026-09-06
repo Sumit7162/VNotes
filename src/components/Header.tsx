@@ -5,11 +5,16 @@ import {
   FileText,
   LayoutDashboard,
   LogOut,
+  Monitor,
+  Moon,
+  Sun,
   Upload,
   User,
 } from "lucide-react";
 
 import { useAuth } from "../hooks/useAuth";
+import { useTheme } from "../hooks/useTheme";
+import type { Theme } from "../lib/theme";
 
 const menuItems = [
   { to: "/dashboard", icon: <LayoutDashboard className="h-4 w-4" />, label: "Dashboard" },
@@ -18,8 +23,15 @@ const menuItems = [
   { to: "/profile", icon: <User className="h-4 w-4" />, label: "Profile" },
 ];
 
+const themeOptions: Array<{ value: Theme; icon: React.ReactNode; label: string }> = [
+  { value: "light", icon: <Sun className="h-4 w-4" />, label: "Light" },
+  { value: "dark", icon: <Moon className="h-4 w-4" />, label: "Dark" },
+  { value: "system", icon: <Monitor className="h-4 w-4" />, label: "System" },
+];
+
 export function Header() {
   const { user, logout } = useAuth();
+  const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
   const displayName = user?.full_name || "User";
   const location = useLocation();
 
@@ -81,6 +93,23 @@ export function Header() {
           </h1>
         </Link>
 
+        <div className="flex items-center gap-1 sm:gap-2">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={
+              resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
+            title={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            className="rounded-full p-2 text-ink-600 transition-colors hover:bg-paper-200 hover:text-ink-900"
+          >
+            {resolvedTheme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </button>
+
         <div className="relative" ref={menuRef}>
           <button
             type="button"
@@ -127,7 +156,7 @@ export function Header() {
                       role="menuitem"
                       className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
-                          ? "bg-accent-50 text-accent-700"
+                          ? "bg-paper-200 text-ink-900"
                           : "text-ink-600 hover:bg-paper-100 hover:text-ink-900"
                       }`}
                     >
@@ -137,6 +166,30 @@ export function Header() {
                   );
                 })}
               </nav>
+
+              <div className="border-t border-line px-1.5 py-2">
+                <p className="px-2 pb-1.5 text-[11px] font-semibold uppercase tracking-wide text-ink-500">
+                  Theme
+                </p>
+                <div className="flex gap-1">
+                  {themeOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setTheme(option.value)}
+                      aria-pressed={theme === option.value}
+                      className={`flex flex-1 flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-medium transition-colors ${
+                        theme === option.value
+                          ? "bg-paper-200 text-ink-900 ring-1 ring-line-strong"
+                          : "text-ink-600 hover:bg-paper-100 hover:text-ink-900"
+                      }`}
+                    >
+                      {option.icon}
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <div className="border-t border-line p-1.5">
                 <button
@@ -151,6 +204,7 @@ export function Header() {
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
     </header>
