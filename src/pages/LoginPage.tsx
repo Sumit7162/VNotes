@@ -45,11 +45,15 @@ export function LoginPage() {
   return (
     <AuthUI
       asideSlot={<MatrixRain />}
-      // Light mode, not the effect's dark default: this half carries dark text,
-      // and below `sm` the card drops its own background entirely, so a dark
-      // ground would leave the form unreadable on a phone.
-      formBackgroundSlot={<RecursiveErosionBackground mode="light" />}
-      formPanelClassName="login-surface"
+      // Held back below `sm`, where the card drops its own background and dark
+      // form text would sit straight on the black ground. From sm up the card
+      // is 90% white, so the form reads cleanly over the effect.
+      formBackgroundSlot={
+        <div className="hidden h-full w-full sm:block">
+          <RecursiveErosionBackground mode="dark" />
+        </div>
+      }
+      formPanelClassName="login-surface login-surface-night"
       // The Google button is a fixed 320px wide, so the card only gains its
       // padding from sm up, where 420px minus p-8 still clears it. On a phone
       // it drops the chrome and uses the full width instead of clipping.

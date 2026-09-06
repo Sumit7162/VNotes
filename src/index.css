@@ -146,6 +146,18 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(64, 47, 126, 0.55);
 }
 
+/* Paired with .login-surface, never used alone. From the sm breakpoint up the
+   erosion effect supplies the ground, so the panel drops to the effect's own
+   near-black and the blue gradient underneath stops mattering. Below sm the
+   effect is not rendered at all - the form card has no background of its own
+   there, and dark form text on a black ground would be unreadable - so
+   .login-surface still shows through. */
+@media (min-width: 640px) {
+  .login-surface-night {
+    background: #0a0908;
+  }
+}
+
 /* Visible focus for keyboard users, in the accent rather than the browser blue */
 :where(a, button, input, textarea, select):focus-visible {
   outline: 2px solid #2A5FD9;
