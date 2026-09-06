@@ -60,10 +60,34 @@ function FloatingPaths({ position }: { position: number }) {
 
 export function BackgroundPaths({
     title = "Background Paths",
+    ctaHref,
+    ctaLabel = "Discover Excellence",
 }: {
     title?: string;
+    /**
+     * Turns the call to action into a real link. Left to the caller rather than
+     * hardcoded here, because the section worth scrolling to belongs to the
+     * page, not to this backdrop. Without it the button renders as before - and
+     * does nothing, which is how it arrived from upstream.
+     */
+    ctaHref?: string;
+    ctaLabel?: string;
 }) {
     const words = title.split(" ");
+
+    const ctaContent = (
+        <>
+            <span className="opacity-90 group-hover:opacity-100 transition-opacity">
+                {ctaLabel}
+            </span>
+            <span
+                className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5
+                transition-all duration-300"
+            >
+                →
+            </span>
+        </>
+    );
 
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-transparent">
@@ -115,6 +139,7 @@ export function BackgroundPaths({
                         overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
                         <Button
+                            asChild={Boolean(ctaHref)}
                             variant="ghost"
                             className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md
                             bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100
@@ -122,15 +147,7 @@ export function BackgroundPaths({
                             group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
                             hover:shadow-md dark:hover:shadow-neutral-800/50"
                         >
-                            <span className="opacity-90 group-hover:opacity-100 transition-opacity">
-                                Discover Excellence
-                            </span>
-                            <span
-                                className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5
-                                transition-all duration-300"
-                            >
-                                →
-                            </span>
+                            {ctaHref ? <a href={ctaHref}>{ctaContent}</a> : ctaContent}
                         </Button>
                     </div>
                 </motion.div>

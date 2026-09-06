@@ -36,7 +36,7 @@ export function HomePage() {
           is built around it: the hero owns the first screen outright, and the
           header and scroll cue sit over it rather than taking height from it. */}
       <div className="relative">
-        <BackgroundPaths title="V-Notes AI" />
+        <BackgroundPaths title="V-Notes AI" ctaHref="#pitch" />
 
         <header className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4 sm:px-8">
           <div className="flex items-center gap-2.5">
