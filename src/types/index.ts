@@ -11,12 +11,14 @@ export interface User {
 
 export type VideoStatus =
   | "pending"
-  | "downloading"
-  | "extracting_audio"
   | "transcribing"
   | "generating_notes"
   | "completed"
-  | "failed";
+  | "failed"
+  // Retired stages, kept so videos processed before transcripts moved to the
+  // transcript API still render.
+  | "downloading"
+  | "extracting_audio";
 
 export interface Video {
   id: string;

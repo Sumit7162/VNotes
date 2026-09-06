@@ -8,8 +8,8 @@ import { formatDateTime } from "../utils/datetime";
 
 const statusLabels: Record<string, string> = {
   pending: "Queued",
-  downloading: "Downloading video",
-  extracting_audio: "Extracting audio",
+  downloading: "Fetching transcript",
+  extracting_audio: "Fetching transcript",
   transcribing: "Creating transcript",
   generating_notes: "Generating notes",
   completed: "Completed",

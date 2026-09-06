@@ -13,8 +13,6 @@ import type { VideoStatus } from "../types";
 
 const processingSteps: Array<{ status: VideoStatus; label: string }> = [
   { status: "pending", label: "Queued" },
-  { status: "downloading", label: "Download" },
-  { status: "extracting_audio", label: "Audio" },
   { status: "transcribing", label: "Transcript" },
   { status: "generating_notes", label: "Notes" },
   { status: "completed", label: "Done" },
@@ -22,8 +20,8 @@ const processingSteps: Array<{ status: VideoStatus; label: string }> = [
 
 const activeStatusLabels: Record<VideoStatus, string> = {
   pending: "Waiting in queue",
-  downloading: "Downloading video",
-  extracting_audio: "Extracting audio",
+  downloading: "Fetching transcript",
+  extracting_audio: "Fetching transcript",
   transcribing: "Creating transcript",
   generating_notes: "Generating notes",
   completed: "Notes ready",

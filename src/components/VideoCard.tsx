@@ -57,8 +57,6 @@ const statusConfig: Record<string, { icon: ReactNode; tone: string; bar: string;
 
 const processingSteps = [
   { status: "pending", label: "Queued" },
-  { status: "downloading", label: "Download" },
-  { status: "extracting_audio", label: "Audio" },
   { status: "transcribing", label: "Transcript" },
   { status: "generating_notes", label: "Notes" },
   { status: "completed", label: "Done" },
