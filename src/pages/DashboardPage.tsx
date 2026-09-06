@@ -176,11 +176,19 @@ export function DashboardPage() {
             {videosFetching && hasActiveVideo && (
               <span className="text-xs font-medium text-accent-600">Updating status...</span>
             )}
-            {videosData && videosData.total > 10 && (
-              <Link to="/notes" className="text-sm text-accent-600 hover:text-accent-800">
-                View All ({videosData.total})
-              </Link>
-            )}
+            {/* The sidebar used to carry this. Shown unconditionally now, where
+                the old "View All" appeared only past ten videos - otherwise the
+                notes list has no way in from the dashboard at all. */}
+            <Link
+              to="/notes"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-paper-50 px-3 py-1.5 text-sm font-medium text-ink-700 transition-colors hover:border-accent-300 hover:text-accent-700"
+            >
+              <FileText className="h-4 w-4" />
+              My Notes
+              {videosData && videosData.total > 0 && (
+                <span className="font-normal text-ink-500">({videosData.total})</span>
+              )}
+            </Link>
           </div>
         </div>
 
